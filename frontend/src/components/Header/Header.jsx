@@ -3,13 +3,17 @@ import { Link } from "react-router-dom";
 
 import "./style/Header.css";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import logo from "./assets/logo.png";
 
 function Header() {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav
+      className="navbar navbar-expand-lg bg-body-tertiary"
+      style={{ maxHeight: "5rem" }}
+    >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          Navbar
+          <img src={logo} alt="logo" className="logo" />
         </Link>
         <button
           className="navbar-toggler"
@@ -24,7 +28,7 @@ function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <Link className="nav-link active" to="/">
+            <Link className="nav-link" to="/">
               Home
             </Link>
             <Link className="nav-link" to="/features">
@@ -36,6 +40,11 @@ function Header() {
             <a className="nav-link disabled" aria-disabled="true">
               Disabled
             </a>
+          </div>
+          <div className="navbar-nav ms-auto">
+            <Link className="nav-link" to="/login">
+              Login / Register
+            </Link>
           </div>
         </div>
       </div>
