@@ -6,6 +6,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -32,12 +33,21 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header isAuthenticated={isAuthenticated} />
-        <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
-          <Route path="/login" element={<Login onLogin={login} />} />
-          <Route path="*" element={<h1>404: Page not found</h1>} />
-        </Routes>
+        <header>
+          <Header isAuthenticated={isAuthenticated} />
+        </header>
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<h1>Home</h1>} />
+            <Route path="/login" element={<Login onLogin={login} />} />
+            <Route path="*" element={<h1>404: Page not found</h1>} />
+          </Routes>
+        </div>
+        {/* <footer>
+          <Footer />
+        </footer> 
+        Consider if needed or not
+        */}
       </BrowserRouter>
     </>
   );
