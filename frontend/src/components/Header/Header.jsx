@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./style/Header.css";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import logo from "./assets/logo.png";
+import logoRed from "./assets/logo-red.png";
+import logoWhite from "./assets/logo-white.png";
 
 function Header() {
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"));
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary"
@@ -13,7 +15,7 @@ function Header() {
     >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img src={logo} alt="logo" className="logo" />
+          <img src={logoWhite} alt="logo" className="logo" />
         </Link>
         <button
           className="navbar-toggler"
