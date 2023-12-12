@@ -27,6 +27,7 @@ function Header() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          {/* Add locked by login pages here */}
           {sessionStorage.getItem("token") ? (
             <div className="navbar-nav">
               <div className="navbar-nav">
