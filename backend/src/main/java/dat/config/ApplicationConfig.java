@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Stream;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
@@ -62,6 +61,7 @@ public class ApplicationConfig {
     private static void setExceptionHandling() {
         ExceptionManagerHandler em = new ExceptionManagerHandler();
         app.exception(ApiException.class, em::apiException);
+        app.exception(AuthorizationException.class, em::authorizationException);
         app.exception(Exception.class, em::exception);
         app.exception(ConstraintViolationException.class, em::constraintViolationException);
         app.exception(ValidationException.class, em::validationException);
@@ -179,6 +179,12 @@ public class ApplicationConfig {
         private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionManagerHandler.class);
 
         public void apiException(ApiException e, Context ctx) {
+            ctx.status(e.getStatusCode());
+            ctx.json(new Message(e.getStatusCode(), System.currentTimeMillis(), e.getMessage()));
+            this.logException(e, ctx);
+        }
+
+        public void authorizationException(AuthorizationException e, Context ctx) {
             ctx.status(e.getStatusCode());
             ctx.json(new Message(e.getStatusCode(), System.currentTimeMillis(), e.getMessage()));
             this.logException(e, ctx);
