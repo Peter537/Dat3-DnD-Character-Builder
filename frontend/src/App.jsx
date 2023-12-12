@@ -6,6 +6,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Header from "./components/Header/Header";
+import MyProfile from "./pages/MyProfile/MyProfile";
 
 function App() {
   document
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<h1>Home</h1>} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<MyProfile />} />
           <Route path="*" element={<h1>404: Page not found</h1>} />
         </Routes>
       </BrowserRouter>
