@@ -3,7 +3,7 @@ import React from "react";
 function Login() {
   return (
     <>
-      <h1>Login</h1>
+      <h1 onClick={sessionStorage.setItem("token", 1234)}>Login</h1>
     </>
   );
 }
