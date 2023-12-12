@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
+        <Header /> {/* TODO: Consider making auth a lifted state */}
         <Routes>
           <Route path="/" element={<h1>Home</h1>} />
           <Route path="/login" element={<Login />} />
