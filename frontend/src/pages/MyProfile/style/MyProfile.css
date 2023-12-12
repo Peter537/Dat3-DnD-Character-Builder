@@ -8,6 +8,10 @@
   height: 5em;
 }
 
+#country-flag {
+  height: 1em;
+}
+
 .userinformation {
   text-align: left;
   font-size: 12px;

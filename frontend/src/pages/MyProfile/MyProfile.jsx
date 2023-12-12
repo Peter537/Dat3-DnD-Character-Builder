@@ -8,24 +8,66 @@ import EditProfile from "../../components/MyProfile/EditProfile";
 function MyProfile() {
   const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
   const [isEditProfile, setIsEditProfile] = useState(false);
+  const [flag, setFlag] = useState(null);
 
   useEffect(() => {
+    const user = {
+      username: "Username",
+      description:
+        "heeey dudes and dudettes jeg vil gerne have at i alle sammen skal vide at jeg er en mega sej fy rder kan lide at spille comput er spil og øhh ja det var det jeg ville sige, men lige til sidst ville jeg også sige at ",
+      createdOn: 1702202893889,
+      country: "dk",
+    };
+    setUser(user);
+    retrieveFlag();
     if (user === undefined || user === null) {
-      // window.location.replace("/");
+      window.location.replace("/");
       return;
     }
-  }, [user]);
+  }, []);
 
   function memberSince() {
-    return formatTime();
-  }
-
-  function lastActive() {
-    return formatTime();
+    const date = new Date(user?.createdOn);
+    const today = new Date();
+    const time = (today - date) / 1000;
+    console.log(time);
+    return formatTime(time);
   }
 
   function formatTime(time) {
-    return "0 days";
+    const days = Math.floor(time / 86400);
+    const hours = Math.floor((time % 86400) / 3600);
+    const minutes = Math.floor(((time % 86400) % 3600) / 60);
+    const seconds = Math.floor(((time % 86400) % 3600) % 60);
+    let result = [];
+    if (days > 0) {
+      result.push(days + " days");
+    }
+    if (hours > 0) {
+      result.push(hours + " hours");
+    }
+    if (minutes > 0) {
+      result.push(minutes + " minutes");
+    }
+    if (seconds > 0) {
+      result.push(seconds + " seconds");
+    }
+
+    if (result.length === 1) return result[0];
+    return result[0] + " and " + result[1];
+  }
+
+  function retrieveFlag() {
+    let country = user?.country ? user.country : "dk"; // TODO: shouldn't be a default value
+    fetch("https://restcountries.com/v3.1/alpha/" + country)
+      .then((res) => res.json())
+      .then((data) => {
+        const flag = {
+          svg: data[0].flags.svg,
+          name: data[0].name.common,
+        };
+        setFlag(flag);
+      });
   }
 
   function editProfileButton(event) {
@@ -49,11 +91,18 @@ function MyProfile() {
         </div>
         <div className="col-7">
           <div className="row userinformation">
-            <div className="userinformation-username">
-              {user?.username} (Username)
-            </div>
+            <div className="userinformation-username">{user?.username}</div>
             <div>Member for {memberSince()}</div>
-            <div>Last active {lastActive()}</div>
+            {flag && (
+              <div>
+                <img
+                  id="country-flag"
+                  src={flag.svg}
+                  style={{ marginRight: "5px" }}
+                ></img>
+                {flag.name}
+              </div>
+            )}
           </div>
         </div>
         <div className="col-3 userinformation-buttons">
@@ -63,7 +112,7 @@ function MyProfile() {
         </div>
       </div>
       <div className="col-12 userinformation-description">
-        {user?.description} (Om mig)
+        {user?.description}
       </div>
       {isEditProfile && (
         <div>
