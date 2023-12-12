@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import "./style/Header.css";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import logoRed from "./assets/logo-red.png";
 import logoWhite from "./assets/logo-white.png";
 
 function Header() {
@@ -32,16 +31,19 @@ function Header() {
           {/* Add locked by login pages here */}
           {sessionStorage.getItem("token") ? (
             <div className="navbar-nav">
-              <div className="navbar-nav">
-                <Link className="nav-link" to="/">
+              <div className="navbar-nav nav-item">
+                <Link className="nav-link navbar-brand text-light" to="/">
                   Home
                 </Link>
               </div>
             </div>
           ) : null}
           <div className="navbar-nav ms-auto">
-            <Link className="nav-link" to="/login">
-              Login / Register
+            <Link className="nav-link navbar-brand text-light" to="/login">
+              <span className="me-2">Login</span>
+              <span className="p-2 border rounded-3 border-light">
+                Register
+              </span>
             </Link>
           </div>
         </div>
