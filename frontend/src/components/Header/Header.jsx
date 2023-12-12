@@ -1,6 +1,8 @@
+// Import packages
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+// Import assets
 import "./style/Header.css";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import logoWhite from "./assets/logo-white.png";
@@ -30,22 +32,35 @@ function Header() {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           {/* Add locked by login pages here */}
           {sessionStorage.getItem("token") ? (
-            <div className="navbar-nav">
-              <div className="navbar-nav nav-item">
-                <Link className="nav-link navbar-brand text-light" to="/">
-                  Home
+            <>
+              <div className="navbar-nav">
+                <div className="navbar-nav nav-item">
+                  <Link className="nav-link navbar-brand text-light" to="/">
+                    Home
+                  </Link>
+                </div>
+              </div>
+              <div className="navbar-nav ms-auto">
+                <Link
+                  className="nav-link navbar-brand text-light"
+                  to="/MyProfile"
+                >
+                  <span className="p-2 border rounded-3 border-light">
+                    My Profile
+                  </span>
                 </Link>
               </div>
+            </>
+          ) : (
+            <div className="navbar-nav ms-auto">
+              <Link className="nav-link navbar-brand text-light" to="/login">
+                <span className="me-2">Login</span>
+                <span className="p-2 border rounded-3 border-light">
+                  Register
+                </span>
+              </Link>
             </div>
-          ) : null}
-          <div className="navbar-nav ms-auto">
-            <Link className="nav-link navbar-brand text-light" to="/login">
-              <span className="me-2">Login</span>
-              <span className="p-2 border rounded-3 border-light">
-                Register
-              </span>
-            </Link>
-          </div>
+          )}
         </div>
       </div>
     </nav>
