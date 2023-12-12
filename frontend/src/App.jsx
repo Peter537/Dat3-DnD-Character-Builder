@@ -1,5 +1,5 @@
 // Base imports
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 // Component imports
@@ -8,6 +8,20 @@ import Login from "./pages/Login/Login";
 import Header from "./components/Header/Header";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    sessionStorage.getItem("token") || false
+  );
+
+  function login(bool) {
+    setIsAuthenticated(bool);
+    sessionStorage.setItem("token", bool);
+  }
+
+  function logout() {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem("token");
+  }
+
   document
     .getElementsByTagName("body")[0]
     .setAttribute(
@@ -18,10 +32,11 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header /> {/* TODO: Consider making auth a lifted state */}
+        <Header isAuthenticated={isAuthenticated} />
+        {/* TODO: Consider making auth a lifted state */}
         <Routes>
           <Route path="/" element={<h1>Home</h1>} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login onLogin={login} />} />
           <Route path="*" element={<h1>404: Page not found</h1>} />
         </Routes>
       </BrowserRouter>

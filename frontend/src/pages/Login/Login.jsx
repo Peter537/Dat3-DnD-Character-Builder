@@ -1,9 +1,9 @@
 import React from "react";
 
-function Login() {
+function Login({ onLogin }) {
   return (
     <>
-      <h1 onClick={sessionStorage.setItem("token", 1234)}>Login</h1>
+      <h1 onClick={() => onLogin(true)}>Login</h1>
     </>
   );
 }

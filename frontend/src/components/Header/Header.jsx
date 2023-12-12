@@ -7,7 +7,7 @@ import "./style/Header.css";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import logoWhite from "./assets/logo-white.png";
 
-function Header() {
+function Header({ isAuthenticated }) {
   const [theme, setTheme] = useState(sessionStorage.getItem("theme"));
   return (
     <nav
@@ -31,7 +31,7 @@ function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           {/* Add locked by login pages here */}
-          {sessionStorage.getItem("token") ? (
+          {isAuthenticated ? (
             <>
               <div className="navbar-nav">
                 <div className="navbar-nav nav-item">
