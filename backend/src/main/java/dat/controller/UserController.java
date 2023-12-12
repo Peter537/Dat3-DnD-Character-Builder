@@ -20,7 +20,7 @@ public class UserController {
 
     public void login(Context ctx) throws ApiException, AuthorizationException {
         String[] userInfos = getUserInfos(ctx, true);
-        User user = getVerfiedOrRegisterUser(userInfos[0], userInfos[1], "", false);
+        User user = getVerfiedOrRegisterUser(userInfos[0], "", userInfos[2], "", false);
         String token = getToken(userInfos[0], user.getRolesAsStrings());
 
         // Create response
@@ -30,7 +30,7 @@ public class UserController {
 
     public void register(Context ctx) throws ApiException, AuthorizationException {
         String[] userInfos = getUserInfos(ctx, false);
-        User user = getVerfiedOrRegisterUser(userInfos[0], userInfos[1], userInfos[2], true);
+        User user = getVerfiedOrRegisterUser(userInfos[0], userInfos[1], userInfos[2], userInfos[3], true);
         String token = getToken(userInfos[0], user.getRolesAsStrings());
 
         // Create response
@@ -49,8 +49,8 @@ public class UserController {
         return TOKEN_FACTORY.parseJsonObject(ctx.body(), tryLogin);
     }
 
-    private User getVerfiedOrRegisterUser(String username, String password, String role, boolean isCreate) throws AuthorizationException {
-        return isCreate ? USER_DAO.registerUser(username, password, role) : USER_DAO.getVerifiedUser(username, password);
+    private User getVerfiedOrRegisterUser(String email, String username, String password, String role, boolean isCreate) throws AuthorizationException {
+        return isCreate ? USER_DAO.registerUser(email, username, password, role) : USER_DAO.getVerifiedUser(email, password);
     }
 
     private String getToken(String username, Set<String> userRoles) throws ApiException {

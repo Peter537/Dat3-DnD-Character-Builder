@@ -14,7 +14,7 @@ public class UserControllerTest extends dat.Test {
 
     @Test
     public void testLoginUserSuccess() {
-        String bodyJson = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", "user", "user123");
+        String bodyJson = String.format("{ \"email\": \"%s\", \"password\": \"%s\" }", "user@mail.dk", "user123");
         given()
                 .body(bodyJson)
                 .when()
@@ -25,7 +25,7 @@ public class UserControllerTest extends dat.Test {
 
     @Test
     public void testLoginUserInvalidPassword() {
-        String bodyJson = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", "user", "wrongPassword");
+        String bodyJson = String.format("{ \"email\": \"%s\", \"password\": \"%s\" }", "user@mail.dk", "wrongPassword");
         given()
                 .body(bodyJson)
                 .when()
@@ -35,8 +35,8 @@ public class UserControllerTest extends dat.Test {
     }
 
     @Test
-    public void testLoginUserInvalidUsername() {
-        String bodyJson = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", "nonExistentUser", "user123");
+    public void testLoginUserInvalidEmail() {
+        String bodyJson = String.format("{ \"email\": \"%s\", \"password\": \"%s\" }", "nonExistentUser@mail.dk", "user123");
         given()
                 .body(bodyJson)
                 .when()
@@ -47,10 +47,11 @@ public class UserControllerTest extends dat.Test {
 
     @Test
     public void testCreateUserSuccess() {
-        User newUser = new User("newUser", "newPassword");
+        User newUser = new User("newUser@mail.dk", "newUser", "newPassword");
         Role userRole = new Role("user");
         newUser.addRole(userRole);
         String bodyJson = OBJECT_MAPPER.createObjectNode()
+                .put("email", newUser.getEmail())
                 .put("username", newUser.getUsername())
                 .put("password", newUser.getPassword())
                 .put("role", userRole.getName())
@@ -64,8 +65,8 @@ public class UserControllerTest extends dat.Test {
     }
 
     @Test
-    public void testCreateUserWithExistingUsername() {
-        String bodyJson = String.format("{ \"username\": \"%s\", \"password\": \"%s\", \"role\": \"%s\" }", "user", "newPassword", "user");
+    public void testCreateUserWithExistingEmail() {
+        String bodyJson = String.format("{ \"email\": \"%s\", \"username\": \"%s\", \"password\": \"%s\", \"role\": \"%s\" }", "user@mail.dk", "user", "newPassword", "user");
         given()
                 .body(bodyJson)
                 .when()

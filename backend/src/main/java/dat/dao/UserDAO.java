@@ -27,12 +27,12 @@ public class UserDAO extends DAO<User> {
         return INSTANCE;
     }
 
-    public User getVerifiedUser(String username, String password) throws AuthorizationException {
+    public User getVerifiedUser(String email, String password) throws AuthorizationException {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            User user = em.find(User.class, username);
+            User user = em.find(User.class, email);
             if (user == null || !user.checkPassword(password)) {
-                throw new AuthorizationException(401, "Invalid user name or password");
+                throw new AuthorizationException(401, "Invalid email or password");
             }
 
             em.getTransaction().commit();
@@ -40,8 +40,8 @@ public class UserDAO extends DAO<User> {
         }
     }
 
-    public User registerUser(String username, String password, String userRole) throws AuthorizationException {
-        User user = new User(username, password);
+    public User registerUser(String email, String username, String password, String userRole) throws AuthorizationException {
+        User user = new User(email, username, password);
         Optional<Role> role = ROLE_DAO.readById(userRole);
         user.addRole(role.or(() -> Optional.of(createRole(userRole))).get());
         try (EntityManager em = emf.createEntityManager()) {
@@ -50,7 +50,7 @@ public class UserDAO extends DAO<User> {
             em.getTransaction().commit();
             return user;
         } catch (Exception e) {
-            throw new AuthorizationException(400, "Username already exists");
+            throw new AuthorizationException(400, "Email already exists");
         }
     }
 

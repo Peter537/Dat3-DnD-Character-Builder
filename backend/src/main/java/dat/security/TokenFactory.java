@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class TokenFactory {
 
     private static TokenFactory INSTANCE;
@@ -43,9 +44,9 @@ public class TokenFactory {
 
     public String[] parseJsonObject(String jsonString, boolean tryLogin) throws ApiException {
         try {
-            @SuppressWarnings("rawtypes")
             Map json = OBJECT_MAPPER.readValue(jsonString, Map.class);
-            String username = json.get("username").toString();
+            String email = json.get("email").toString();
+            String username = json.getOrDefault("username", "").toString();
             String password = json.get("password").toString();
             StringBuilder role = new StringBuilder();
             if (!tryLogin) {
@@ -57,6 +58,7 @@ public class TokenFactory {
             }
 
             return new String[] {
+                    email,
                     username,
                     password,
                     role.toString()
@@ -66,10 +68,10 @@ public class TokenFactory {
         }
     }
 
-    public String createToken(String userName, Set<String> roles) throws ApiException {
+    public String createToken(String username, Set<String> roles) throws ApiException {
         try {
             String rolesAsString = String.join(",", roles);
-            return SIGNATURE.signToken(userName, rolesAsString, new Date());
+            return SIGNATURE.signToken(username, rolesAsString, new Date());
         } catch (JOSEException e) {
             throw new ApiException(500, "Could not create token");
         }

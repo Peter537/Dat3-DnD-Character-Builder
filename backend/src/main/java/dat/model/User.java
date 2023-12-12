@@ -5,10 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,23 +26,36 @@ public class User implements Serializable, dat.model.Entity<UserDTO> {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Basic(optional = false)
-    @Column(name = "user_name", length = 25)
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
+
+    @Column(name = "username", unique = true, nullable = false, length = 25)
+    @Setter
     private String username;
 
-    @Basic(optional = false)
-    @Column(name = "user_password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "description", length = 384)
+    @Setter
+    private String description;
+
+    @Column(name = "created_on", nullable = false)
+    @Setter
+    private LocalDateTime createdOn;
+
     @JoinTable(name = "user_roles", joinColumns = {
-            @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
+            @JoinColumn(name = "username", referencedColumnName = "username")}, inverseJoinColumns = {
             @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
     @ManyToMany(fetch = FetchType.EAGER)
     private final Set<Role> roles = new LinkedHashSet<>();
 
-    public User(String username, String password) {
+    public User(String email, String username, String password) {
+        this.email = email;
         this.setUsername(username);
         this.setPassword(password);
+        this.setDescription("");
+        this.setCreatedOn(LocalDateTime.now());
     }
 
     public Set<String> getRolesAsStrings() {
@@ -55,10 +70,6 @@ public class User implements Serializable, dat.model.Entity<UserDTO> {
 
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public void addRole(Role role) {
