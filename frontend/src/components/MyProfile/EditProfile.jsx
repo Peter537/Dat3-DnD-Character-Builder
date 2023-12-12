@@ -19,6 +19,8 @@ function EditProfile({ user, setUser }) {
       <h1>Edit Profile</h1>
       <div>Username</div>
       <input type="text" id="edit-username" className="col-2" />
+      <div>Country</div>
+      <input type="text" id="edit-country" className="col-2" />
       <div>Description</div>
       <textarea id="edit-description" />
       <button className="col-1 btn btn-primary" onClick={save}>
