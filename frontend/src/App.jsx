@@ -33,7 +33,6 @@ function App() {
     <>
       <BrowserRouter>
         <Header isAuthenticated={isAuthenticated} />
-        {/* TODO: Consider making auth a lifted state */}
         <Routes>
           <Route path="/" element={<h1>Home</h1>} />
           <Route path="/login" element={<Login onLogin={login} />} />
