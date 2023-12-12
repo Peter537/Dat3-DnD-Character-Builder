@@ -31,15 +31,6 @@ function Header() {
             <Link className="nav-link" to="/">
               Home
             </Link>
-            <Link className="nav-link" to="/features">
-              Features
-            </Link>
-            <Link className="nav-link" to="/pricing">
-              Pricing
-            </Link>
-            <a className="nav-link disabled" aria-disabled="true">
-              Disabled
-            </a>
           </div>
           <div className="navbar-nav ms-auto">
             <Link className="nav-link" to="/login">
