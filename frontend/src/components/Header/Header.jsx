@@ -27,11 +27,15 @@ function Header() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <Link className="nav-link" to="/">
-              Home
-            </Link>
-          </div>
+          {sessionStorage.getItem("token") ? (
+            <div className="navbar-nav">
+              <div className="navbar-nav">
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
+              </div>
+            </div>
+          ) : null}
           <div className="navbar-nav ms-auto">
             <Link className="nav-link" to="/login">
               Login / Register
