@@ -15,11 +15,12 @@ function MyProfile() {
       username: "Username",
       description:
         "heeey dudes and dudettes jeg vil gerne have at i alle sammen skal vide at jeg er en mega sej fy rder kan lide at spille comput er spil og øhh ja det var det jeg ville sige, men lige til sidst ville jeg også sige at ",
-      createdOn: 1702202893889,
+      createdOn: 1702402893889,
       country: "dk",
     };
+    sessionStorage.setItem("user", JSON.stringify(user));
     setUser(user);
-    retrieveFlag();
+    retrieveFlag(user);
     if (user === undefined || user === null) {
       window.location.replace("/");
       return;
@@ -57,8 +58,9 @@ function MyProfile() {
     return result[0] + " and " + result[1];
   }
 
-  function retrieveFlag() {
+  function retrieveFlag(user) {
     let country = user?.country ? user.country : "dk"; // TODO: shouldn't be a default value
+    setFlag({ svg: "", name: "" });
     fetch("https://restcountries.com/v3.1/alpha/" + country)
       .then((res) => res.json())
       .then((data) => {
@@ -68,6 +70,15 @@ function MyProfile() {
         };
         setFlag(flag);
       });
+  }
+
+  function updateUser(newUser) {
+    setUser(newUser);
+    sessionStorage.setItem("user", JSON.stringify(newUser));
+    if (newUser.country !== user.country) {
+      retrieveFlag(newUser);
+    }
+    setIsEditProfile(false);
   }
 
   function editProfileButton(event) {
@@ -116,7 +127,7 @@ function MyProfile() {
       </div>
       {isEditProfile && (
         <div>
-          <EditProfile user={user} setUser={setUser} />
+          <EditProfile user={user} updateUser={updateUser} />
         </div>
       )}
     </div>

@@ -1,17 +1,19 @@
 /* eslint-disable react/prop-types */
 import "./style/EditProfile.css";
 
-function EditProfile({ user, setUser }) {
+function EditProfile({ user, updateUser }) {
   function save() {
     const username = document.getElementById("edit-username").value;
     const description = document.getElementById("edit-description").value;
+    const country = document.getElementById("edit-country").value;
     const newUser = {
       ...user,
       username: username === "" ? user.username : username,
       description: description === "" ? user.description : description,
+      country: country === "" ? user.country : country,
     };
 
-    setUser(newUser);
+    updateUser(newUser);
   }
 
   return (
@@ -23,7 +25,7 @@ function EditProfile({ user, setUser }) {
       <input type="text" id="edit-country" className="col-2" />
       <div>Description</div>
       <textarea id="edit-description" />
-      <button className="col-1 btn btn-primary" onClick={save}>
+      <button className="col-1 btn btn-primary" onClick={() => save()}>
         Save
       </button>
     </div>
