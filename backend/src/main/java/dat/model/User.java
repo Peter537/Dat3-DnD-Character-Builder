@@ -44,6 +44,15 @@ public class User implements Serializable, dat.model.Entity<UserDTO> {
     @Setter
     private LocalDateTime createdOn;
 
+    @Column(name = "updated_on", nullable = false)
+    @Setter
+    private LocalDateTime updatedOn;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    @Setter
+    private Country country;
+
     @JoinTable(name = "user_roles", joinColumns = {
             @JoinColumn(name = "username", referencedColumnName = "username")}, inverseJoinColumns = {
             @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
@@ -56,6 +65,7 @@ public class User implements Serializable, dat.model.Entity<UserDTO> {
         this.setPassword(password);
         this.setDescription("");
         this.setCreatedOn(LocalDateTime.now());
+        this.setUpdatedOn(LocalDateTime.now());
     }
 
     public Set<String> getRolesAsStrings() {
