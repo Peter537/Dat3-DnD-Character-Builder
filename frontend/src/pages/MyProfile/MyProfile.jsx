@@ -31,7 +31,6 @@ function MyProfile() {
     const date = new Date(user?.createdOn);
     const today = new Date();
     const time = (today - date) / 1000;
-    console.log(time);
     return formatTime(time);
   }
 
@@ -93,14 +92,14 @@ function MyProfile() {
       </div>
       <div id="profile-line" className="col-12"></div>
       <div className="col-12 row">
-        <div className="col-2">
+        <div className="col-1">
           <img
             id="profile-picture"
             src={defaultProfilePicture}
             alt="logo"
           ></img>
         </div>
-        <div className="col-7">
+        <div className="col-8">
           <div className="row userinformation">
             <div className="userinformation-username">{user?.username}</div>
             <div>Member for {memberSince()}</div>
