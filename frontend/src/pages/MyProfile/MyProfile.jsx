@@ -58,8 +58,12 @@ function MyProfile() {
   }
 
   function retrieveFlag(user) {
-    let country = user?.country ? user.country : "dk"; // TODO: shouldn't be a default value
     setFlag({ svg: "", name: "" });
+    let country = user?.country ? user.country : "";
+    if (!country) {
+      return;
+    }
+
     fetch("https://restcountries.com/v3.1/alpha/" + country)
       .then((res) => res.json())
       .then((data) => {
