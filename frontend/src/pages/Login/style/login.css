@@ -1,0 +1,12 @@
+@media screen and (max-width: 600px) {
+}
+
+@media screen and (min-width: 600px) {
+  .background-image {
+    background-image: url("../assets/d7tsqui8stp51.png");
+    /* background-color: #cccccc; */
+    width: 40vw !important;
+    height: 100vh;
+    margin-left: -12px !important;
+  }
+}
