@@ -16,8 +16,15 @@ Provides navigation between General, Feats, and Spells sections.
 ### General
 #### Race
 #### Background
+Ällows you to choose a background from adropdown list. Overtime: create custom backgrounds.
 #### Class
+Allows you to choose one or mkore classes and input the levels you have in each. Should probably also have a dropdown for subclasses if the lvl is high enough.
+Also allows you to create custom classes (free text fields)
+#### Info/Description
+Shows the information about the latest race/bg/class you have clicked on. Default: blank or help-text.
 ### Feats
+Allows you to choose any number of feats. Overtime: restrict feats to the ones you are eligible for.
 ### Spells
+Allows you to choose any number of spells in the different spell-levels. Overtime: restrict spells to the ones you are eligible for.
 
 
