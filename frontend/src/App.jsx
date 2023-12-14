@@ -1,5 +1,5 @@
 // Base imports
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 // Component imports
@@ -14,6 +14,13 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     sessionStorage.getItem("token") || false
   );
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      sessionStorage.setItem("token", true);
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   function login(bool) {
     setIsAuthenticated(bool);
