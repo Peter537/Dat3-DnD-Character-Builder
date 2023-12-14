@@ -53,7 +53,7 @@ function Header({ isAuthenticated }) {
             </>
           ) : (
             <div className="navbar-nav ms-auto">
-              <Link className="nav-link navbar-brand text-light" to="/login">
+              <Link className="nav-link navbar-brand text-light" to="/L/Login">
                 <span className="me-2">Login</span>
                 <span className="p-2 border rounded-3 border-light">
                   Register

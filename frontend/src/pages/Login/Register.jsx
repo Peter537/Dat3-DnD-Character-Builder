@@ -1,36 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
-// import assets
-import "./style/login.css";
-import { Link } from "react-router-dom";
-
-function Login({ onLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  function handleLogin(e) {
-    e.preventDefault();
-
-    if (email === "" || password === "") {
-      alert("Please fill out all fields.");
-      return;
-    }
-    // TODO: add login logic
-
-    const login = "Yes";
-    if (document.getElementById("keepLoggedIn").checked) {
-      localStorage.setItem("token", login);
-    }
-    sessionStorage.setItem("token", login);
-
-    onLogin();
-  }
-
+function Register() {
   return (
     <>
       <div className="row">
         <div className="col-auto ms-5 mt-5">
-          <h1 className="mb-4">Login</h1>
+          <h1 className="mb-4">Register</h1>
           <form className="p-2 border rounded border-opacity-25 border-secondary">
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
@@ -41,7 +16,6 @@ function Login({ onLogin }) {
                 className="form-control"
                 id="email"
                 aria-describedby="emailHelp"
-                onChange={(e) => setEmail(e.target.value)}
               />
               <div id="emailHelp" className="form-text">
                 If you have forgotten your email, please contact an admin.
@@ -51,12 +25,7 @@ function Login({ onLogin }) {
               <label htmlFor="password" className="form-label">
                 Password
               </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <input type="password" className="form-control" id="password" />
             </div>
             <div className="mb-3 form-check">
               <input
@@ -72,14 +41,10 @@ function Login({ onLogin }) {
               type="submit"
               className="btn btn-outline-danger"
               style={{ width: "100%" }}
-              onClick={handleLogin}
             >
               Submit
             </button>
           </form>
-          <Link id="register" className="form-text" to={"/L/Register"}>
-            If you don't have an account, please register here
-          </Link>
         </div>
         <div className="col-auto"></div>
       </div>
@@ -87,4 +52,4 @@ function Login({ onLogin }) {
   );
 }
 
-export default Login;
+export default Register;
