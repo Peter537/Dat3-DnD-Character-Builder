@@ -30,11 +30,11 @@ function Login({ onLogin }) {
         <div className="col-auto">
           <div className="background-image container-fluid"></div>
         </div>
-        <div className="col-auto" style={{ marginTop: "5rem" }}>
+        <div className="col-sm-7" style={{ marginTop: "5rem" }}>
           <div className="row">
-            <div className="col-auto">
-              <h1>Login</h1>
-              <form>
+            <div className="col-auto ms-5 mt-5">
+              <h1 className="mb-4">Login</h1>
+              <form className="p-2 border rounded border-opacity-25 border-secondary">
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
                     Email address
@@ -73,7 +73,8 @@ function Login({ onLogin }) {
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="btn btn-outline-danger"
+                  style={{ width: "100%" }}
                   onClick={handleLogin}
                 >
                   Submit
