@@ -18,7 +18,21 @@ function Register() {
                 aria-describedby="emailHelp"
               />
               <div id="emailHelp" className="form-text">
-                If you have forgotten your email, please contact an admin.
+                This email is what you will use to login to the system.
+              </div>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
+                Username
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                aria-describedby="usernameHelp"
+              />
+              <div id="usernameHelp" className="form-text">
+                This username is what will be displayed to other users.
               </div>
             </div>
             <div className="mb-3">
@@ -27,15 +41,15 @@ function Register() {
               </label>
               <input type="password" className="form-control" id="password" />
             </div>
-            <div className="mb-3 form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="keepLoggedIn"
-              />
-              <label className="form-check-label" htmlFor="keepLoggedIn">
-                Keep me logged in
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">
+                Confirm Password
               </label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmPassword"
+              />
             </div>
             <button
               type="submit"
