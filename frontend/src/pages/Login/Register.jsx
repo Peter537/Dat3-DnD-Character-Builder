@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Register() {
   return (
@@ -59,6 +60,9 @@ function Register() {
               Submit
             </button>
           </form>
+          <Link id="login" className="form-text" to={"/L/Login"}>
+            If you already have an account, please login here
+          </Link>
         </div>
         <div className="col-auto"></div>
       </div>
