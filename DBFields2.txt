@@ -12,25 +12,12 @@ User:
 Country:
 	name PK
 
-Source:
-	id PK
-	name
-	source
-	group
-	published
-	author (Nullable)
-
 School:
 	id PK
-	color
 
 Spell:
 	id PK Auto incre
-	source FK
 	school FK
-	page
-	srd
-	basicRules
 	level
 	castType FK
 	castTime
@@ -144,13 +131,7 @@ Armor class: (MxM)
 Item: 
 	id PK Auto incre
 	name
-	source FK
-	page
-	srd
-	basicRules
-	custom
 	type FK
-	rarity
 	weight
 	value
 	ac
@@ -169,6 +150,5 @@ Entry x Item:
 Feat:
 	id PK
 	name
-	source FK
 	levelRq (Nullable)
 	description
