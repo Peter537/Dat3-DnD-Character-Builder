@@ -9,6 +9,9 @@ User:
 	description
 	country FK
 
+Country:
+	name PK
+
 Source:
 	id PK
 	name
