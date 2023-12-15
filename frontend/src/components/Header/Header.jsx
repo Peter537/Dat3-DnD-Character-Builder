@@ -1,11 +1,14 @@
-import React from "react";
+// Import packages
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+// Import assets
 import "./style/Header.css";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import logo from "./assets/logo.png";
+import logoWhite from "./assets/logo-white.png";
 
-function Header() {
+function Header({ isAuthenticated }) {
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"));
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary"
@@ -13,7 +16,7 @@ function Header() {
     >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img src={logo} alt="logo" className="logo" />
+          <img src={logoWhite} alt="logo" className="logo" />
         </Link>
         <button
           className="navbar-toggler"
@@ -28,20 +31,36 @@ function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           {/* Add locked by login pages here */}
-          {sessionStorage.getItem("token") ? (
-            <div className="navbar-nav">
+          {isAuthenticated ? (
+            <>
               <div className="navbar-nav">
-                <Link className="nav-link" to="/">
-                  Home
+                <div className="navbar-nav nav-item">
+                  <Link className="nav-link navbar-brand text-light" to="/">
+                    Home
+                  </Link>
+                </div>
+              </div>
+              <div className="navbar-nav ms-auto">
+                <Link
+                  className="nav-link navbar-brand text-light"
+                  to="/MyProfile"
+                >
+                  <span className="p-2 border rounded-3 border-light">
+                    My Profile
+                  </span>
                 </Link>
               </div>
+            </>
+          ) : (
+            <div className="navbar-nav ms-auto">
+              <Link className="nav-link navbar-brand text-light" to="/L/Login">
+                <span className="me-2">Login</span>
+                <span className="p-2 border rounded-3 border-light">
+                  Register
+                </span>
+              </Link>
             </div>
-          ) : null}
-          <div className="navbar-nav ms-auto">
-            <Link className="nav-link" to="/login">
-              Login / Register
-            </Link>
-          </div>
+          )}
         </div>
       </div>
     </nav>
