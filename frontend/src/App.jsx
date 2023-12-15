@@ -49,9 +49,9 @@ function App() {
         <div className="container">
           <Routes>
             <Route path="/" element={<h1>Home</h1>} />
-            <Route path="/L" element={<LoginRegister />}>
-              <Route path="Login" element={<Login onLogin={login} />} />
-              <Route path="Register" element={<Register />} />
+            <Route path="/l" element={<LoginRegister />}>
+              <Route path="login" element={<Login onLogin={login} />} />
+              <Route path="register" element={<Register />} />
             </Route>
             <Route path="/profile" element={<MyProfile />} />
             <Route path="*" element={<h1>404: Page not found</h1>} />

@@ -30,7 +30,7 @@ function Register() {
     }
 
     // TODO: Implement registration logic here
-    window.location.replace("/L/Login");
+    window.location.replace("/l/login");
   }
 
   return (
