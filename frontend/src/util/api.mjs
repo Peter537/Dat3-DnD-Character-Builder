@@ -1,4 +1,4 @@
-const URL = "http://localhost:7007";
+const URL = import.meta.env.VITE_SERVER_URL;
 
 function handleHttpErrors(res) {
   if (!res.ok) {
@@ -57,6 +57,7 @@ function apiFacade() {
 
   const loggedIn = () => {
     const loggedIn = getToken() != null;
+    console.log(URL);
     return loggedIn;
   };
 
