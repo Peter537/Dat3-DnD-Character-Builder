@@ -10,6 +10,7 @@ import MyProfile from "./pages/MyProfile/MyProfile";
 import Footer from "./components/Footer/Footer";
 import LoginRegister from "./pages/Login/LoginRegister";
 import Register from "./pages/Login/Register";
+import CharactersPage from "./pages/CharactersPage/CharactersPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -54,6 +55,7 @@ function App() {
               <Route path="register" element={<Register />} />
             </Route>
             <Route path="/profile" element={<MyProfile />} />
+            <Route path="/characters" element={<CharactersPage />} />
             <Route path="*" element={<h1>404: Page not found</h1>} />
           </Routes>
         </div>
