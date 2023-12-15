@@ -1,7 +1,7 @@
 
 
 
-function Stats() {
+function Stats(charInfo, setCharInfo) {
   return (
     <>
       <div className="row">
@@ -32,7 +32,8 @@ function Stats() {
           </div>
         </div>
         <div className="col-md-4">
-          <img
+          <input 
+          type="file"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Red_Square.svg/2048px-Red_Square.svg.png"
             alt="character portrait"
             style={{ width: "10rem", height: "10rem" }}

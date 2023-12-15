@@ -10,7 +10,7 @@ import MyProfile from "./pages/MyProfile/MyProfile";
 import Footer from "./components/Footer/Footer";
 import LoginRegister from "./pages/Login/LoginRegister";
 import Register from "./pages/Login/Register";
-import EditorPage from "./components/Editor/EditorPage";
+import EditorPage from "./components/Editor/EditorPage/EditorPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -55,8 +55,12 @@ function App() {
               <Route path="register" element={<Register />} />
             </Route>
             <Route path="/profile" element={<MyProfile />} />
+            <Route path="/editor" element={<EditorPage />}>
+              <Route path="general" element={<h1>Generalpage</h1>} />
+              <Route path="features" element={<h1>features</h1>} />
+              <Route path="spells" element={<h1>spellspage</h1>} />
+            </Route>
             <Route path="*" element={<h1>404: Page not found</h1>} />
-            <Route path="/editor" element={<EditorPage/>} />
           </Routes>
         </div>
         {/* <footer>
