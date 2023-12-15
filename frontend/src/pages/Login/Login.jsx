@@ -77,7 +77,7 @@ function Login({ onLogin }) {
               Submit
             </button>
           </form>
-          <Link id="register" className="form-text" to={"/L/Register"}>
+          <Link id="register" className="form-text" to={"/l/register"}>
             If you don't have an account, please register here
           </Link>
         </div>
