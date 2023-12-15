@@ -90,49 +90,53 @@ function MyProfile() {
   }
 
   return (
-    <div className="container row">
-      <div className="col-12">
-        <h1>{user?.username}'s Profile</h1>
-      </div>
-      <div id="profile-line" className="col-12"></div>
-      <div className="col-12 row">
-        <div className="col-1">
-          <img
-            id="profile-picture"
-            src={defaultProfilePicture}
-            alt="logo"
-          ></img>
+    <div className="container profile-container row">
+      <div className="col-2"></div>
+      <div className="col-8">
+        <div className="col-12">
+          <h1>{user?.username}'s Profile</h1>
         </div>
-        <div className="col-8">
-          <div className="row userinformation">
-            <div className="userinformation-username">{user?.username}</div>
-            <div>Member for {memberSince()}</div>
-            {flag && (
-              <div>
-                <img
-                  id="country-flag"
-                  src={flag.svg}
-                  style={{ marginRight: "5px" }}
-                ></img>
-                {flag.name}
-              </div>
-            )}
+        <div id="profile-line" className="col-12"></div>
+        <div className="col-12 row">
+          <div className="col-1">
+            <img
+              id="profile-picture"
+              src={defaultProfilePicture}
+              alt="logo"
+            ></img>
+          </div>
+          <div className="col-8">
+            <div className="row userinformation">
+              <div className="userinformation-username">{user?.username}</div>
+              <div>Member for {memberSince()}</div>
+              {flag && (
+                <div>
+                  <img
+                    id="country-flag"
+                    src={flag.svg}
+                    style={{ marginRight: "5px" }}
+                  ></img>
+                  {flag.name}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="col-3 userinformation-buttons">
+            <button className="btn btn-primary" onClick={editProfileButton}>
+              Edit Profile
+            </button>
           </div>
         </div>
-        <div className="col-3 userinformation-buttons">
-          <button className="btn btn-primary" onClick={editProfileButton}>
-            Edit Profile
-          </button>
+        <div className="col-12 userinformation-description">
+          {user?.description}
         </div>
+        {isEditProfile && (
+          <div>
+            <EditProfile user={user} updateUser={updateUser} />
+          </div>
+        )}
       </div>
-      <div className="col-12 userinformation-description">
-        {user?.description}
-      </div>
-      {isEditProfile && (
-        <div>
-          <EditProfile user={user} updateUser={updateUser} />
-        </div>
-      )}
+      <div className="col-2"></div>
     </div>
   );
 }

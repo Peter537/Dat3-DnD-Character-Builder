@@ -1,5 +1,7 @@
-#root {
+.profile-container {
+  min-width: 100vw;
   margin: 0 auto;
+  text-align: center;
 }
 
 #profile-line {
