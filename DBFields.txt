@@ -162,3 +162,9 @@ Entry x Item:
 	id PK Auto incre
 	itemId FK
 	entryId FK
+Feat:
+	id PK
+	name
+	source FK
+	levelRq (Nullable)
+	description
