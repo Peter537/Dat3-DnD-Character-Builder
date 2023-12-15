@@ -11,7 +11,7 @@ function Header({ isAuthenticated }) {
   const [theme, setTheme] = useState(sessionStorage.getItem("theme"));
   return (
     <nav
-      className="navbar navbar-expand-lg bg-body-tertiary"
+      className="navbar cstm-navbar navbar-expand-lg bg-body-tertiary"
       style={{ maxHeight: "5rem" }}
     >
       <div className="container-fluid">
