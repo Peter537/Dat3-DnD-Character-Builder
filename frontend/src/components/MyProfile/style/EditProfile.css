@@ -1,0 +1,18 @@
+.edit-profile-box {
+  background-color: dimgrey;
+  text-align: left;
+  margin-top: 25px;
+}
+
+#edit-username {
+  margin-bottom: 5px;
+}
+
+#edit-description {
+  margin-bottom: 15px;
+}
+
+button {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
