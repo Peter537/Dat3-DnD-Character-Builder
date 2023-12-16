@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CharacterCard from "../../components/Characters/CharacterCard";
 import "./style/CharactersPage.css";
 
@@ -8,6 +8,11 @@ function CharactersPage() {
   const [shownCharacters, setShownCharacters] = useState(defaultCharacters);
   const [sortingMethod, setSortingMethod] = useState(1); // 1 = A to Z, 2 = Z to A
   const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    search();
+    console.log("useEffect", shownCharacters);
+  }, [sortingMethod, searchValue]);
 
   function viewCharacter(id) {
     console.log(`View character ${id}`);
@@ -22,20 +27,18 @@ function CharactersPage() {
     let value = event.target.value;
     console.log(value);
     setSearchValue(value);
-    search();
   }
 
   function searchSortBy(event) {
     event.preventDefault();
-    search();
   }
 
   function search() {
     let filteredCharacters = characters
       .filter(
         (character) =>
-          character.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-          character.raceClass.toLowerCase().includes(searchValue.toLowerCase())
+          character.name.toLowerCase().includes(searchValue?.toLowerCase()) ||
+          character.raceClass.toLowerCase().includes(searchValue?.toLowerCase())
       )
       .sort((a, b) => {
         if (sortingMethod === 1) {
