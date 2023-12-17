@@ -6,12 +6,11 @@ import "./style/CharactersPage.css";
 function CharactersPage() {
   const [characters, setCharacters] = useState(defaultCharacters);
   const [shownCharacters, setShownCharacters] = useState(defaultCharacters);
-  const [sortingMethod, setSortingMethod] = useState(1); // 1 = A to Z, 2 = Z to A
+  const [sortingMethod, setSortingMethod] = useState("1"); // 1 = A to Z, 2 = Z to A
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     search();
-    console.log("useEffect", shownCharacters);
   }, [sortingMethod, searchValue]);
 
   function viewCharacter(id) {
@@ -22,17 +21,6 @@ function CharactersPage() {
     console.log(`Delete character ${id}`);
   }
 
-  function searchCharacter(event) {
-    event.preventDefault();
-    let value = event.target.value;
-    console.log(value);
-    setSearchValue(value);
-  }
-
-  function searchSortBy(event) {
-    event.preventDefault();
-  }
-
   function search() {
     let filteredCharacters = characters
       .filter(
@@ -41,15 +29,13 @@ function CharactersPage() {
           character.raceClass.toLowerCase().includes(searchValue?.toLowerCase())
       )
       .sort((a, b) => {
-        if (sortingMethod === 1) {
+        if (sortingMethod === "1") {
           return a.name.localeCompare(b.name);
         } else {
           return b.name.localeCompare(a.name);
         }
       });
-    console.log("before", shownCharacters);
     setShownCharacters(filteredCharacters);
-    console.log("after", shownCharacters);
   }
 
   return (
@@ -78,7 +64,10 @@ function CharactersPage() {
               <div className="col-6">
                 <input
                   type="text"
-                  onChange={searchCharacter}
+                  onChange={(event) => {
+                    event.preventDefault();
+                    setSearchValue(event.target.value);
+                  }}
                   style={{ margin: "0.5rem" }}
                 ></input>
               </div>
@@ -86,7 +75,10 @@ function CharactersPage() {
                 <select
                   name="characters-sort-by"
                   id="characters-sort-by"
-                  onClick={searchSortBy}
+                  onChange={(event) => {
+                    event.preventDefault();
+                    setSortingMethod(event.target.value);
+                  }}
                   style={{ margin: "0.5rem" }}
                 >
                   <option value="1">Name: A to Z</option>
