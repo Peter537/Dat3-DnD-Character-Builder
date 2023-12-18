@@ -55,7 +55,6 @@ function CharactersPage() {
           <div className="col-4"></div>
         </div>
       </div>
-      <div id="characters-page-line"></div>
       <div className="col-12">
         <div className="row">
           <div className="col-1"></div>
