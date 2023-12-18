@@ -68,6 +68,7 @@ function CharactersPage() {
                     event.preventDefault();
                     setSearchValue(event.target.value);
                   }}
+                  placeholder="Search"
                   style={{ margin: "0.5rem" }}
                 ></input>
               </div>
