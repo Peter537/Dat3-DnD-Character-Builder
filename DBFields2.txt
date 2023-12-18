@@ -1,0 +1,154 @@
+Standard fields:
+	created_on
+	updated_on
+
+User:
+	email PK
+	username
+	password
+	description
+	country FK
+
+Country:
+	name PK
+
+School:
+	id PK
+
+Spell:
+	id PK Auto incre
+	school FK
+	level
+	castType FK
+	castTime
+	castRange FK
+	verbal
+	semantic
+	material
+	duration (string, too many options)
+	scallableDice FK (Nullable, not everything is scaleable)
+
+Cast Type:
+	type PK (minute, hour, action, reaction, bonus action)
+
+Cast Range: 
+	id PK Auto incre
+	type FK
+	distance
+	amount
+
+Range Type:
+	type PK (touch, point)
+
+Entry:
+	id PK Auto Incre
+	text
+
+Entry x Spell: (One spell can have more than entry, one entry may be used elsewhere later on)
+	id PK
+	spellId FK
+	entryId FK
+
+Scaling Dice:
+	id PK Auto incre
+	text
+	1
+	2
+	3
+	... to 20 all nullable strings
+
+Damage Type:
+	type PK
+
+Damage Type x Spell (One spell can have many dmg type, one dmg type can be on many spells)
+	id PK
+	spellId FK
+	entryId FK
+	
+Saving Throw:
+	type PK
+
+Saving Throw x Spell (-//-)
+	id PK
+	spellId FK
+	savingThrowId FK
+
+Character:
+	id PK Auto incre
+	name
+	level
+	size
+	movement
+	healthId FK (1x1, med formål af at man evt kan nemt tilføje felter der også kan bruges på creatures)
+	
+	
+Movement: (Technically MxM, men med mere data)
+	id PK Auto incre
+	type FK
+	characterId FK
+	speed (10, 20, 111...)
+	distance (miles, feet...)
+
+Movement Type:
+	type PK (walk, fly, swim...)
+
+Health:
+	id PK
+	maxhealth
+	temphealth
+	currenthealth
+
+Ability Scores: (MxM)
+	id PK Auto incre
+	abilityScoreType FK
+	characterId FK
+
+Abilty Score Type:
+	type PK (str, dex, con, int, wis, cha...)
+
+Senses: (Technically MxM, men med mere data)
+	id PK Auto incre
+	characterId
+	range (10, 20, 111...)
+	distance (miles, feet...)
+	description
+
+Senses Type:
+	type PK (blindsight, darkvision, truesight...)
+
+Armor class: (MxM)
+	id PK Auto incre
+	characterId FK
+	itemSrc FK (Nullable)
+	spellSrc FK (Nullable)
+	srcName
+	value
+	isArmor
+	isItem
+	isSpell
+	isOther
+
+Item: 
+	id PK Auto incre
+	name
+	type FK
+	weight
+	value
+	ac
+	strength
+	otherRequirements (String)
+	armor
+	allowsStealth
+	
+Item Type:
+	type PK
+
+Entry x Item:
+	id PK Auto incre
+	itemId FK
+	entryId FK
+Feat:
+	id PK
+	name
+	levelRq (Nullable)
+	description

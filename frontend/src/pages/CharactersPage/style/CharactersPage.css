@@ -1,0 +1,14 @@
+.characters-container {
+  min-width: 100vw;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: var(--header-height);
+}
+
+.character-button {
+  margin-right: 5px;
+}
+
+.characters-search-box {
+  background-color: gray;
+}
