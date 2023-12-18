@@ -13,6 +13,7 @@ import Register from "./pages/Login/Register";
 import CharactersPage from "./pages/CharactersPage/CharactersPage";
 
 function App() {
+  //#region Login methods
   const [isAuthenticated, setIsAuthenticated] = useState(
     sessionStorage.getItem("token") || false
   );
@@ -24,15 +25,17 @@ function App() {
     }
   }, []);
 
-  function login(bool) {
-    setIsAuthenticated(bool);
-    sessionStorage.setItem("token", bool);
+  function login(token) {
+    setIsAuthenticated(token !== null);
+    sessionStorage.setItem("token", token);
   }
 
   function logout() {
     setIsAuthenticated(false);
     sessionStorage.removeItem("token");
   }
+
+  //#endregion
 
   document
     .getElementsByTagName("body")[0]
