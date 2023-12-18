@@ -26,7 +26,7 @@ function CharacterCard({ character, viewCharacter, deleteCharacter }) {
           className="character-button btn btn-primary"
           onClick={() => alert("Comming soon... (hopefully)")}
         >
-          COPY
+          DUPLICATE
         </button>
         <button
           className="character-button btn btn-primary"
