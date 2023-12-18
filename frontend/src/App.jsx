@@ -11,6 +11,7 @@ import Footer from "./components/Footer/Footer";
 import LoginRegister from "./pages/Login/LoginRegister";
 import Register from "./pages/Login/Register";
 import EditorPage from "./components/Editor/EditorPage/EditorPage";
+import General from "./components/Editor/General/General";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -41,6 +42,30 @@ function App() {
       sessionStorage.getItem("theme") || sessionStorage.setItem("theme", "dark")
     );
 
+    const [charInfo, setCharInfo] = useState({
+      name: "",
+      level: 0,
+      stats: {
+        str: 0,
+        dex: 0,
+        con: 0,
+        int: 0,
+        wis: 0,
+        cha: 0,
+      },
+      race: '',
+      background: {
+        name: "",
+        features: [],
+        skills: [],
+        toolprof: [],
+        langprof: []
+      },
+      class: [],
+    });
+
+
+
   return (
     <>
       <BrowserRouter>
@@ -56,7 +81,7 @@ function App() {
             </Route>
             <Route path="/profile" element={<MyProfile />} />
             <Route path="/editor" element={<EditorPage />}>
-              <Route path="general" element={<h1>Generalpage</h1>} />
+              <Route path="general" element={<General charInfo={charInfo} setCharInfo={setCharInfo} />} />
               <Route path="features" element={<h1>features</h1>} />
               <Route path="spells" element={<h1>spellspage</h1>} />
             </Route>

@@ -32,12 +32,10 @@ function Stats(charInfo, setCharInfo) {
           </div>
         </div>
         <div className="col-md-4">
-          <input 
-          type="file"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Red_Square.svg/2048px-Red_Square.svg.png"
-            alt="character portrait"
-            style={{ width: "10rem", height: "10rem" }}
-          />
+         <label htmlFor="img"> 
+         <img style={{width: "40%", height: "40%"}} src="https://cdn.discordapp.com/attachments/259737881071976449/1185615190650261594/submit-new2-1439041881__1_.gif?ex=65904131&is=657dcc31&hm=408c6ca3b54375074ca070e6af4ef961e806a1d6f96da6d10a306212629ac975&" alt="placeholder" />
+         <input id="img" type="file" hidden />
+         </label>
         </div>
       </div>
 

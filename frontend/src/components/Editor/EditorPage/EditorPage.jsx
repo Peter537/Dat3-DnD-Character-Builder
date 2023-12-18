@@ -8,23 +8,7 @@ import "../EditorPage/EditorPage.css";
 import ENav from "../EditorNav/EditorNav";
 
 function EditorPage() {
-
-
-  const [charInfo, setCharInfo] = useState({
-    name: "",
-    level: 0,
-    stats: {
-      str: 0,
-      dex: 0,
-      con: 0,
-      int: 0,
-      wis: 0,
-      cha: 0,
-    },
-    Race: [],
-    Class: [],
-
-  });
+ 
 
   return (
     <div className="editorpage-container">
@@ -33,7 +17,9 @@ function EditorPage() {
 
       <div className="row" style={{ margin: "5%" }}></div>
       <ENav />
-      <Outlet charinfo={charInfo} setCharInfo={setCharInfo} />
+      <div className="editorpage-tab">
+      <Outlet/>
+      </div>
     </div>
   );
 }
