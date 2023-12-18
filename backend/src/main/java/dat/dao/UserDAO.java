@@ -6,6 +6,7 @@ import dat.model.Role;
 import dat.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 
 import java.util.Optional;
 
@@ -30,13 +31,34 @@ public class UserDAO extends DAO<User> {
     public User getVerifiedUser(String email, String password) throws AuthorizationException {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            User user = em.find(User.class, email);
+            User user = em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
             if (user == null || !user.checkPassword(password)) {
                 throw new AuthorizationException(401, "Invalid email or password");
             }
 
             em.getTransaction().commit();
             return user;
+        } catch (NoResultException e) {
+            throw new AuthorizationException(401, "Invalid email or password");
+        }
+    }
+
+    public User getVerifiedUserFromUsername(String username, String password) throws AuthorizationException {
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            User user = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            if (user == null || !user.checkPassword(password)) {
+                throw new AuthorizationException(401, "Invalid username or password");
+            }
+
+            em.getTransaction().commit();
+            return user;
+        } catch (NoResultException e) {
+            throw new AuthorizationException(401, "Invalid username or password");
         }
     }
 
