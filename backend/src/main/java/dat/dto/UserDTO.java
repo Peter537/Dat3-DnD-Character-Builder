@@ -6,23 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.Set;
-
 @Getter
 @ToString
 @NoArgsConstructor
 public class UserDTO implements DTO<User> {
 
     private String username;
-    private Set<String> roles;
+    private int id;
 
-    public UserDTO(String username, String[] roles) {
+    public UserDTO(String username, int id) {
         this.username = username;
-        this.roles = Set.of(roles);
+        this.id = id;
     }
 
     public UserDTO(User user) {
-        this(user.getUsername(), user.getRolesAsStrings().toArray(new String[0]));
+        this(user.getUsername(), user.getId());
     }
 
     @Override
