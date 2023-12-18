@@ -9,8 +9,6 @@ import dat.security.TokenFactory;
 import io.javalin.http.Context;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @NoArgsConstructor
 public class UserController {
 
@@ -19,23 +17,26 @@ public class UserController {
     private final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public void login(Context ctx) throws ApiException, AuthorizationException {
-        String[] userInfos = getUserInfos(ctx, true);
-        User user = getVerfiedOrRegisterUser(userInfos[0], "", userInfos[2], "", false);
-        String token = getToken(userInfos[0], user.getRolesAsStrings());
+        User user = getUser(ctx, false);
+        String token = getToken(user);
 
         // Create response
         ctx.status(200);
-        ctx.result(createResponse(userInfos[0], token));
+        ctx.result(createResponse(user.getUsername(), token));
     }
 
     public void register(Context ctx) throws ApiException, AuthorizationException {
-        String[] userInfos = getUserInfos(ctx, false);
-        User user = getVerfiedOrRegisterUser(userInfos[0], userInfos[1], userInfos[2], userInfos[3], true);
-        String token = getToken(userInfos[0], user.getRolesAsStrings());
+        User user = getUser(ctx, true);
+        String token = getToken(user);
 
         // Create response
         ctx.res().setStatus(201);
-        ctx.result(createResponse(userInfos[0], token));
+        ctx.result(createResponse(user.getUsername(), token));
+    }
+
+    private User getUser(Context ctx, boolean isCreate) throws ApiException, AuthorizationException {
+        String[] userInfos = getUserInfos(ctx);
+        return getVerfiedOrRegisterUser(userInfos[0], userInfos[1], userInfos[2], "USER", isCreate);
     }
 
     private String createResponse(String username, String token) {
@@ -45,15 +46,19 @@ public class UserController {
                 .toString();
     }
 
-    private String[] getUserInfos(Context ctx, boolean tryLogin) throws ApiException {
-        return TOKEN_FACTORY.parseJsonObject(ctx.body(), tryLogin);
+    private String[] getUserInfos(Context ctx) throws ApiException {
+        return TOKEN_FACTORY.parseJsonObject(ctx.body());
     }
 
     private User getVerfiedOrRegisterUser(String email, String username, String password, String role, boolean isCreate) throws AuthorizationException {
-        return isCreate ? USER_DAO.registerUser(email, username, password, role) : USER_DAO.getVerifiedUser(email, password);
+        if (isCreate) {
+            return USER_DAO.registerUser(email, username, password, role);
+        }
+
+        return email.isEmpty() ? USER_DAO.getVerifiedUserFromUsername(username, password) : USER_DAO.getVerifiedUser(email, password);
     }
 
-    private String getToken(String username, Set<String> userRoles) throws ApiException {
-        return TOKEN_FACTORY.createToken(username, userRoles);
+    private String getToken(User user) throws ApiException {
+        return TOKEN_FACTORY.createToken(user.getUsername(), user.getId());
     }
 }
