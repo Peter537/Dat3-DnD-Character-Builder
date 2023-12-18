@@ -10,10 +10,20 @@ function handleHttpErrors(res) {
 function apiFacade() {
   const login = async (user, password) => {
     const options = makeOptions("POST", true, {
-      username: user,
+      email: user,
       password: password,
     });
     const res = await fetch(URL + "/api/v1/auth/login", options);
+    const res_1 = await handleHttpErrors(res);
+    return res_1.token;
+  };
+
+  const register = async (user, password) => {
+    const options = makeOptions("POST", true, {
+      email: user,
+      password: password,
+    });
+    const res = await fetch(URL + "/api/v1/auth/register", options);
     const res_1 = await handleHttpErrors(res);
     return res_1.token;
   };
