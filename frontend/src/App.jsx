@@ -61,7 +61,7 @@ function App() {
         toolprof: [],
         langprof: []
       },
-      class: [],
+      classes: [],
     });
 
 
