@@ -2,12 +2,14 @@ package dat.config;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import dat.dao.UserDAO;
 import dat.dto.UserDTO;
 import dat.exception.ApiException;
 import dat.exception.AuthorizationException;
 import dat.message.Message;
 import dat.message.ValidationMessage;
 import dat.model.Role;
+import dat.model.User;
 import dat.route.Route;
 import dat.route.UserRoutes;
 import dat.security.TokenFactory;
@@ -164,10 +166,8 @@ public class ApplicationConfig {
             try {
                 String token = ctx.header("Authorization").split(" ")[1];
                 UserDTO userDTO = TokenFactory.getInstance().verifyToken(token);
-                return userDTO.getRoles()
-                        .stream()
-                        .map(Role::of)
-                        .anyMatch(permittedRoles::contains);
+                User user = UserDAO.getInstance().readById(userDTO.getId()).orElseThrow(() -> new AuthorizationException(401, "Invalid token"));
+                return user.getRoles().stream().anyMatch(permittedRoles::contains);
             } catch (NullPointerException e) {
                 throw new ApiException(401, "Invalid token");
             }
