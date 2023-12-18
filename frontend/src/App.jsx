@@ -54,7 +54,10 @@ function App() {
           <Routes>
             <Route path="/" element={<h1>Home</h1>} />
             <Route path="/l" element={<LoginRegister />}>
-              <Route path="login" element={<Login onLogin={login} />} />
+              <Route
+                path="login"
+                element={<Login onLogin={(token) => login(token)} />}
+              />
               <Route path="register" element={<Register />} />
             </Route>
             <Route path="/profile" element={<MyProfile />} />
