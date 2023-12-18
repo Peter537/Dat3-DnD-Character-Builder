@@ -74,6 +74,7 @@ function General({ charInfo, setCharInfo }) {
               + Add Class
             </button>
   
+        
             
           </div>
   

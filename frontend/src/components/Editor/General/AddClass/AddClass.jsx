@@ -1,9 +1,16 @@
+/* eslint-disable react/prop-types */
 // AddClass.js
 
+import { useEffect } from "react";
+
 function AddClass({ charInfo, setCharInfo, index }) {
+
     const addClass = () => {
       const newClassName = document.getElementById(`className${index}`).value;
       const newClassLevel = document.getElementById(`classLevel${index}`).value;
+
+      console.log(index);
+      console.log(newClassName);
   
       if (newClassName === "" || newClassLevel === "") {
         alert("Please fill out all fields.");
@@ -12,15 +19,22 @@ function AddClass({ charInfo, setCharInfo, index }) {
         alert("Please enter a valid level.");
         return;
       } else {
-        const updatedClasses = charInfo.classes.map((item, i) =>
-          i === index ? { name: newClassName, level: newClassLevel } : item
-        );
+
+        const updatedClasses = charInfo.classes.map((item, i) => {
+            if (i === index) {
+              // Update properties with new values
+              return { name: newClassName, level: newClassLevel };
+            } else 
+            return item;
+          });
+        
+          // Update the state with the modified classes array
+          setCharInfo({
+            ...charInfo,
+            classes: updatedClasses,
+          });
+        }
   
-        setCharInfo({
-          ...charInfo,
-          classes: updatedClasses,
-        });
-      }
     };
   
     const deleteClass = () => {
@@ -31,6 +45,10 @@ function AddClass({ charInfo, setCharInfo, index }) {
         classes: updatedClasses,
       });
     };
+
+    useEffect(() => {
+        console.log(charInfo);
+      }, [charInfo]);
   
     return (
       <>
@@ -52,7 +70,7 @@ function AddClass({ charInfo, setCharInfo, index }) {
               id={`className${index}`}
             />
           </div>
-          <div className="col-md-5">
+          <div className="col-md-2">
             <label htmlFor={`classLevel${index}`}>Level</label>
             <input
               type="number"
@@ -62,6 +80,12 @@ function AddClass({ charInfo, setCharInfo, index }) {
               min="1"
               max="20"
             />
+          </div>
+
+          <div className="col-md-2">
+            <button type="button" onClick={addClass}>
+              Save
+            </button>
           </div>
           <div className="col-md-2">
             <button type="button" onClick={deleteClass}>
