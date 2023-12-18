@@ -92,6 +92,13 @@
             <version>${hibernate-version}</version>
         </dependency>
 
+        <!-- MongoDB -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.8.2</version>
+        </dependency>
+
         <!--  Logging   -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
