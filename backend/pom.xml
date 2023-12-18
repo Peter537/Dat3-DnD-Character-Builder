@@ -30,6 +30,8 @@
         <db.username>postgres</db.username>
         <db.password>postgres</db.password>
         <db.connection.string>jdbc:postgresql://localhost:5432/</db.connection.string>
+        <!-- MongoDB    -->
+        <mongo.connection.string>mongodb://localhost:27017</mongo.connection.string>
         <!--  Javalin    -->
         <javalin.port>7007</javalin.port>
     </properties>
