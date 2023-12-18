@@ -25,7 +25,7 @@ public class MongoConfig {
     public static MongoDatabase getDatabase() throws IOException {
         if (database == null) {
             mongoClient = buildMongoClient();
-            database = mongoClient.getDatabase("myDatabase");
+            database = mongoClient.getDatabase(ApplicationConfig.getProperty("mongo.db.name"));
         }
 
         return database;
