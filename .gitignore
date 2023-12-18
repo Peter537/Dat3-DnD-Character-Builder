@@ -1,4 +1,5 @@
-.mongo/data
+# Mongo db data
+mongo/data
 
 # Compiled class file
 *.class
