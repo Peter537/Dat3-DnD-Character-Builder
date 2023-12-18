@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class TokenFactory {
@@ -42,36 +43,25 @@ public class TokenFactory {
         return INSTANCE;
     }
 
-    public String[] parseJsonObject(String jsonString, boolean tryLogin) throws ApiException {
+    public String[] parseJsonObject(String jsonString) throws ApiException {
         try {
             Map json = OBJECT_MAPPER.readValue(jsonString, Map.class);
-            String email = json.get("email").toString();
+            String email = json.getOrDefault("email", "").toString();
             String username = json.getOrDefault("username", "").toString();
             String password = json.get("password").toString();
-            StringBuilder role = new StringBuilder();
-            if (!tryLogin) {
-                role.append(json.get("role").toString());
-                List<String> roles = Arrays.asList("user", "admin", "manager");
-                if (!roles.contains(role.toString())) {
-                    throw new ApiException(400, "Role not valid");
-                }
-            }
-
             return new String[] {
                     email,
                     username,
-                    password,
-                    role.toString()
+                    password
             };
         } catch (JsonProcessingException | NullPointerException e) {
             throw new ApiException(400, "Malformed JSON Supplied");
         }
     }
 
-    public String createToken(String username, Set<String> roles) throws ApiException {
+    public String createToken(String username, Integer id) throws ApiException {
         try {
-            String rolesAsString = String.join(",", roles);
-            return SIGNATURE.signToken(username, rolesAsString, new Date());
+            return SIGNATURE.signToken(username, id, new Date());
         } catch (JOSEException e) {
             throw new ApiException(500, "Could not create token");
         }
