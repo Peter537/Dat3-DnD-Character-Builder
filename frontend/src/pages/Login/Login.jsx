@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import facade from "../../util/api.mjs";
 
 // import assets
 import "./style/login.css";
@@ -17,13 +18,13 @@ function Login({ onLogin }) {
     }
     // TODO: add login logic
 
-    const login = "Yes";
+    const login = facade.login(email, password);
     if (document.getElementById("keepLoggedIn").checked) {
       localStorage.setItem("token", login);
     }
     sessionStorage.setItem("token", login);
 
-    onLogin();
+    onLogin(login);
   }
 
   return (
