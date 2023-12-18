@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +25,10 @@ public class User implements Serializable, dat.model.Entity<UserDTO> {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
+
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
@@ -68,12 +71,6 @@ public class User implements Serializable, dat.model.Entity<UserDTO> {
         this.setUpdatedOn(LocalDateTime.now());
     }
 
-    public Set<String> getRolesAsStrings() {
-        return this.roles.stream()
-                .map(Role::getName)
-                .collect(Collectors.toSet());
-    }
-
     public boolean checkPassword(String checkedPassword) {
         return BCrypt.checkpw(checkedPassword, this.password);
     }
@@ -89,7 +86,7 @@ public class User implements Serializable, dat.model.Entity<UserDTO> {
     @Override
     public void setId(Object id) {
         if (id != null) {
-            this.username = id.toString();
+            this.id = Integer.parseInt(id.toString());
         }
     }
 
