@@ -38,8 +38,8 @@ public abstract class Test {
         }
 
         // Get tokens
-        this.USER_TOKEN = getToken(user.getUsername(), "user123");
-        this.ADMIN_TOKEN = getToken(admin.getUsername(), "admin123");
+        this.USER_TOKEN = getToken(user.getEmail(), "user123");
+        this.ADMIN_TOKEN = getToken(admin.getEmail(), "admin123");
     }
 
     @AfterAll
