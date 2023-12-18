@@ -5,7 +5,8 @@ function Stats(charInfo, setCharInfo) {
   return (
     <>
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-2"></div>
+        <div className="col-4">
           <div className="input-group mb-3">
             <div className="input-group-prepend">
               <span className="input-group-text" id="basic-addon1">
@@ -43,8 +44,11 @@ function Stats(charInfo, setCharInfo) {
         </div>
 
       <div className="row">
+        <div className="col-md-2"></div>
+        
         <button type="btn btn-primary">Roll stats</button>
         <div className="col-md-2">
+          
           <label htmlFor="str">Str</label>
         </div>
 
