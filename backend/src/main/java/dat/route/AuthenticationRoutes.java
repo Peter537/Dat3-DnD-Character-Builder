@@ -6,7 +6,7 @@ import io.javalin.apibuilder.EndpointGroup;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
-public class UserRoutes implements Route {
+public class AuthenticationRoutes implements Route {
 
     private final UserController userController = new UserController();
 
