@@ -1,0 +1,1 @@
+for /r %%i in (*) do mongoimport --uri mongodb://localhost:27017/DND-Builder /c Spell %%i
