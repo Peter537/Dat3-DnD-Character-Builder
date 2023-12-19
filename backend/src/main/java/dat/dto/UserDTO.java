@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.ZoneId;
+
 @Getter
 @ToString
 @NoArgsConstructor
@@ -31,7 +33,7 @@ public class UserDTO implements DTO<User> {
     }
 
     public UserDTO(User user) {
-        this(user.getUsername(), user.getDescription(), user.getCreatedOn().toEpochSecond(null), user.getCountry() != null ? user.getCountry().getCode() : "", user.getId());
+        this(user.getUsername(), user.getDescription(), user.getCreatedOn().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond(), user.getCountry() != null ? user.getCountry().getCode() : "", user.getId());
     }
 
     @Override
