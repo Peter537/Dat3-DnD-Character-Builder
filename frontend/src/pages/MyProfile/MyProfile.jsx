@@ -23,14 +23,7 @@ function MyProfile() {
       let user = data;
       console.log("user", user);
 
-      user = {
-        username: "Username",
-        description:
-          "heeey dudes and dudettes jeg vil gerne have at i alle sammen skal vide at jeg er en mega sej fy rder kan lide at spille comput er spil og øhh ja det var det jeg ville sige, men lige til sidst ville jeg også sige at ",
-        createdOn: 1702402893889,
-        country: "dk",
-      };
-      sessionStorage.setItem("user", JSON.stringify(user));
+      user.countryCode = "dk"; // to delete
       setUser(user);
       retrieveFlag(user);
       if (user === undefined || user === null) {
@@ -41,7 +34,7 @@ function MyProfile() {
   }, []);
 
   function memberSince() {
-    const date = new Date(user?.createdOn);
+    const date = new Date(user?.createdAt);
     const today = new Date();
     const time = (today - date) / 1000;
     return formatTime(time);
@@ -72,7 +65,7 @@ function MyProfile() {
 
   function retrieveFlag(user) {
     setFlag({ svg: "", name: "" });
-    let country = user?.country ? user.country : "";
+    let country = user?.countryCode ? user.countryCode : "";
     if (!country) {
       return;
     }
