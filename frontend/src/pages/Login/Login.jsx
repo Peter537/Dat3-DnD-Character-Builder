@@ -19,12 +19,15 @@ function Login({ onLogin }) {
     // TODO: add login logic
 
     const login = facade.login(email, password);
-    if (document.getElementById("keepLoggedIn").checked) {
-      localStorage.setItem("token", login);
-    }
-    sessionStorage.setItem("token", login);
+    login.then((token) => {
+      const jwt = token;
+      if (document.getElementById("keepLoggedIn").checked) {
+        localStorage.setItem("token", jwt);
+      }
+      sessionStorage.setItem("token", jwt);
 
-    onLogin(login);
+      onLogin(jwt);
+    });
   }
 
   return (
