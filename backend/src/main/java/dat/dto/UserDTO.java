@@ -12,15 +12,26 @@ import lombok.ToString;
 public class UserDTO implements DTO<User> {
 
     private String username;
-    private int id;
+    private String description;
+    private Long createdAt;
+    private String countryCode;
+    private Integer id;
 
     public UserDTO(String username, int id) {
         this.username = username;
         this.id = id;
     }
 
+    public UserDTO(String username, String description, Long createdAt, String countryCode, Integer id) {
+        this.username = username;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.countryCode = countryCode;
+        this.id = id;
+    }
+
     public UserDTO(User user) {
-        this(user.getUsername(), user.getId());
+        this(user.getUsername(), user.getDescription(), user.getCreatedOn().toEpochSecond(null), user.getCountry() != null ? user.getCountry().getCode() : "", user.getId());
     }
 
     @Override
