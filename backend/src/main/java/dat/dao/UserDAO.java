@@ -1,6 +1,7 @@
 package dat.dao;
 
 import dat.config.HibernateConfig;
+import dat.dto.UserInfoDTO;
 import dat.exception.AuthorizationException;
 import dat.model.Role;
 import dat.model.User;
@@ -28,6 +29,10 @@ public class UserDAO extends DAO<User> {
         return INSTANCE;
     }
 
+    public User getVerifiedUser(UserInfoDTO userInfo) throws AuthorizationException {
+        return getVerifiedUser(userInfo.email(), userInfo.password());
+    }
+
     public User getVerifiedUser(String email, String password) throws AuthorizationException {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
@@ -45,21 +50,8 @@ public class UserDAO extends DAO<User> {
         }
     }
 
-    public User getVerifiedUserFromUsername(String username, String password) throws AuthorizationException {
-        try (EntityManager em = emf.createEntityManager()) {
-            em.getTransaction().begin();
-            User user = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
-                    .setParameter("username", username)
-                    .getSingleResult();
-            if (user == null || !user.checkPassword(password)) {
-                throw new AuthorizationException(401, "Invalid username or password");
-            }
-
-            em.getTransaction().commit();
-            return user;
-        } catch (NoResultException e) {
-            throw new AuthorizationException(401, "Invalid username or password");
-        }
+    public User registerUser(UserInfoDTO userInfo) throws AuthorizationException {
+        return registerUser(userInfo.email(), userInfo.username(), userInfo.password(), "USER");
     }
 
     public User registerUser(String email, String username, String password, String userRole) throws AuthorizationException {

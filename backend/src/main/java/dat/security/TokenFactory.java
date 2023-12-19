@@ -7,6 +7,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import dat.config.ApplicationConfig;
 import dat.dto.UserDTO;
+import dat.dto.UserInfoDTO;
 import dat.exception.ApiException;
 import dat.exception.AuthorizationException;
 import org.jetbrains.annotations.NotNull;
@@ -43,17 +44,13 @@ public class TokenFactory {
         return INSTANCE;
     }
 
-    public String[] parseJsonObject(String jsonString) throws ApiException {
+    public UserInfoDTO parseJsonObject(String jsonString) throws ApiException {
         try {
             Map json = OBJECT_MAPPER.readValue(jsonString, Map.class);
-            String email = json.getOrDefault("email", "").toString();
+            String email = json.get("email").toString();
             String username = json.getOrDefault("username", "").toString();
             String password = json.get("password").toString();
-            return new String[] {
-                    email,
-                    username,
-                    password
-            };
+            return new UserInfoDTO(email, username, password);
         } catch (JsonProcessingException | NullPointerException e) {
             throw new ApiException(400, "Malformed JSON Supplied");
         }

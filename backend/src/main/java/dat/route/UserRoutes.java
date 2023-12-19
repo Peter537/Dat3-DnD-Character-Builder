@@ -18,8 +18,8 @@ public class UserRoutes implements Route {
     @Override
     public EndpointGroup getRoutes() {
         return () -> {
-            path("/login", () -> post(userController::login));
-            path("/register", () -> post(userController::register));
+            path("/login", () -> post(ctx -> userController.authenticate(ctx, false)));
+            path("/register", () -> post(ctx -> userController.authenticate(ctx, true)));
         };
     }
 }

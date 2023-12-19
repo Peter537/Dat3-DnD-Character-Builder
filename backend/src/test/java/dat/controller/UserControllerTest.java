@@ -45,39 +45,6 @@ public class UserControllerTest extends dat.Test {
     }
 
     @Test
-    public void testLoginUsernameSuccess() {
-        String bodyJson = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", "user", "user123");
-        given()
-                .body(bodyJson)
-                .when()
-                .post(ApplicationConfig.getBaseURL() + "/auth/login")
-                .then()
-                .statusCode(200);
-    }
-
-    @Test
-    public void testLoginUsernameInvalidPassword() {
-        String bodyJson = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", "user", "wrongPassword");
-        given()
-                .body(bodyJson)
-                .when()
-                .post(ApplicationConfig.getBaseURL() + "/auth/login")
-                .then()
-                .statusCode(401);
-    }
-
-    @Test
-    public void testLoginUserInvalidUsername() {
-        String bodyJson = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", "nonExistentUser", "user123");
-        given()
-                .body(bodyJson)
-                .when()
-                .post(ApplicationConfig.getBaseURL() + "/auth/login")
-                .then()
-                .statusCode(401);
-    }
-
-    @Test
     public void testCreateUserSuccess() {
         User newUser = new User("newUser@mail.dk", "newUser", "newPassword");
         String bodyJson = OBJECT_MAPPER.createObjectNode()
