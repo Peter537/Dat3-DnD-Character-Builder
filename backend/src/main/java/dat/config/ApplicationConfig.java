@@ -2,6 +2,7 @@ package dat.config;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.nimbusds.jose.shaded.json.JSONArray;
 import dat.dao.UserDAO;
 import dat.dto.UserDTO;
 import dat.exception.ApiException;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class ApplicationConfig {
@@ -54,6 +56,25 @@ public class ApplicationConfig {
         setBeforeHandling();
         setAfterHandling();
         addRoutes(new UserRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
+        app.routes(() -> path("/mongo", () -> {
+            get(ctx -> {
+                try {
+                    List<String> collections = new ArrayList<>();
+                    MongoConfig.getDatabase().listCollectionNames().into(collections);
+                    String jsonArray = JSONArray.toJSONString(collections);
+                    ctx.result(jsonArray);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            get("/spells", ctx -> {
+                try {
+                    ctx.result(Objects.requireNonNull(Objects.requireNonNull(MongoConfig.getDatabase().getCollection("Spell").find().skip(8)).first()).toJson());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }));
     }
 
     private static void setAccessHandler() {
