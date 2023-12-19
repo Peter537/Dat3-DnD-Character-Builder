@@ -13,6 +13,7 @@ import dat.model.Role;
 import dat.model.User;
 import dat.route.Route;
 import dat.route.AuthenticationRoutes;
+import dat.route.UserRoutes;
 import dat.security.TokenFactory;
 import io.javalin.Javalin;
 import io.javalin.http.ContentType;
@@ -55,7 +56,7 @@ public class ApplicationConfig {
         setExceptionHandling();
         setBeforeHandling();
         setAfterHandling();
-        addRoutes(new AuthenticationRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
+        addRoutes(new AuthenticationRoutes(), new UserRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
         app.routes(() -> path("/mongo", () -> {
             get(ctx -> {
                 try {
