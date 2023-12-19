@@ -100,10 +100,16 @@ public class ApplicationConfig {
             ctx.attribute("requestInfo", ctx.req().getMethod() + " " + ctx.req().getRequestURI());
             LOGGER.info("Request {} - {} was received", count, ctx.attribute("requestInfo"));
         });
+        app.options("/*", ctx -> {
+            ctx.header("Access-Control-Allow-Origin", "*");
+            ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+            ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Authentication");
+            ctx.header("Access-Control-Allow-Credentials", "true");
+        });
         app.before(ctx -> {
             ctx.header("Access-Control-Allow-Origin", "*");
             ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
-            ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Authentication");
             ctx.header("Access-Control-Allow-Credentials", "true");
         });
     }
