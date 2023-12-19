@@ -28,9 +28,9 @@ function apiFacade() {
     return res_1.token;
   };
 
-  const fetchData = async () => {
-    const options = makeOptions("GET", true);
-    return fetch(URL + "/api/v1/", options).then(handleHttpErrors);
+  const fetchData = async (route, addToken) => {
+    const options = makeOptions("GET", addToken || true);
+    return fetch(URL + "/api/v1/" + route, options).then(handleHttpErrors);
   };
 
   const makeOptions = (method, addToken, body) => {
