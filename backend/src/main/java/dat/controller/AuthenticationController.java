@@ -11,7 +11,7 @@ import io.javalin.http.Context;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class UserController {
+public class AuthenticationController {
 
     private final UserDAO USER_DAO = UserDAO.getInstance();
     private final TokenFactory TOKEN_FACTORY = TokenFactory.getInstance();

@@ -1,6 +1,6 @@
 package dat.route;
 
-import dat.controller.UserController;
+import dat.controller.AuthenticationController;
 import io.javalin.apibuilder.EndpointGroup;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
@@ -8,7 +8,7 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 
 public class AuthenticationRoutes implements Route {
 
-    private final UserController userController = new UserController();
+    private final AuthenticationController authenticationController = new AuthenticationController();
 
     @Override
     public String getBasePath() {
@@ -18,8 +18,8 @@ public class AuthenticationRoutes implements Route {
     @Override
     public EndpointGroup getRoutes() {
         return () -> {
-            path("/login", () -> post(ctx -> userController.authenticate(ctx, false)));
-            path("/register", () -> post(ctx -> userController.authenticate(ctx, true)));
+            path("/login", () -> post(ctx -> authenticationController.authenticate(ctx, false)));
+            path("/register", () -> post(ctx -> authenticationController.authenticate(ctx, true)));
         };
     }
 }
