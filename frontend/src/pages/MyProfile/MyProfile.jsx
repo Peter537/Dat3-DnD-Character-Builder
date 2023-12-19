@@ -18,22 +18,26 @@ function MyProfile() {
     const decodedPayload = JSON.parse(payload);
     const userId = decodedPayload.userId;
     console.log(userId);
-    // const userAPI = facade.fetchData("/users/" + userId);
+    let userPromise = facade.fetchData("users/" + userId, false);
+    userPromise.then((data) => {
+      let user = data;
+      console.log("user", user);
 
-    const user = {
-      username: "Username",
-      description:
-        "heeey dudes and dudettes jeg vil gerne have at i alle sammen skal vide at jeg er en mega sej fy rder kan lide at spille comput er spil og øhh ja det var det jeg ville sige, men lige til sidst ville jeg også sige at ",
-      createdOn: 1702402893889,
-      country: "dk",
-    };
-    sessionStorage.setItem("user", JSON.stringify(user));
-    setUser(user);
-    retrieveFlag(user);
-    if (user === undefined || user === null) {
-      window.location.replace("/");
-      return;
-    }
+      user = {
+        username: "Username",
+        description:
+          "heeey dudes and dudettes jeg vil gerne have at i alle sammen skal vide at jeg er en mega sej fy rder kan lide at spille comput er spil og øhh ja det var det jeg ville sige, men lige til sidst ville jeg også sige at ",
+        createdOn: 1702402893889,
+        country: "dk",
+      };
+      sessionStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+      retrieveFlag(user);
+      if (user === undefined || user === null) {
+        window.location.replace("/");
+        return;
+      }
+    });
   }, []);
 
   function memberSince() {
