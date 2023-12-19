@@ -33,7 +33,7 @@ public class UserDTO implements DTO<User> {
     }
 
     public UserDTO(User user) {
-        this(user.getUsername(), user.getDescription(), user.getCreatedOn().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond(), user.getCountry() != null ? user.getCountry().getCode() : "", user.getId());
+        this(user.getUsername(), user.getDescription(), user.getCreatedOn().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond() * 1000, user.getCountry() != null ? user.getCountry().getCode() : "", user.getId());
     }
 
     @Override
