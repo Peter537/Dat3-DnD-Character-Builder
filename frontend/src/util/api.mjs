@@ -39,7 +39,6 @@ function apiFacade() {
       headers: {
         "Content-type": "application/json",
         Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     };
     if (addToken && loggedIn()) {
