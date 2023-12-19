@@ -4,13 +4,22 @@ import React, { useEffect, useState } from "react";
 import "./style/MyProfile.css";
 import defaultProfilePicture from "./assets/default-profile-picture.png";
 import EditProfile from "../../components/MyProfile/EditProfile";
+import facade from "../../util/api.mjs";
 
 function MyProfile() {
-  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+  const [user, setUser] = useState(null);
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [flag, setFlag] = useState(null);
 
   useEffect(() => {
+    let jwt = sessionStorage.getItem("token");
+    const encodedPayload = jwt.split(".")[1];
+    const payload = atob(encodedPayload);
+    const decodedPayload = JSON.parse(payload);
+    const userId = decodedPayload.userId;
+    console.log(userId);
+    // const userAPI = facade.fetchData("/users/" + userId);
+
     const user = {
       username: "Username",
       description:
