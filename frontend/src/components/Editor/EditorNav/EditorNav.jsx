@@ -1,11 +1,12 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom"; // Assuming you're using React Router for navigation
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../EditorNav/EditorNav.css";
 
 const ENav = () => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg justify-content-center">
+      <nav className="navbar navbar-expand-lg justify-content-center nav-box">
         <ul className="navbar-nav">
           <li className={`nav-item`}>
             <NavLink className="nav-link" to="general">
