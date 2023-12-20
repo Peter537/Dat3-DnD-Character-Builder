@@ -11,7 +11,6 @@ function General({ charInfo, setCharInfo }) {
         ...charInfo,
         race: event.target.value,
       });
-      console.log(charInfo.race);
     };
   
     const addClass = () => {
@@ -26,36 +25,64 @@ function General({ charInfo, setCharInfo }) {
         ...charInfo,
         background: event.target.value,
       });
-      console.log(charInfo.background);
     };
   
     return (
       <>
         <div className="dropdown-area row">
           <div className="col-md-4">
-            <label>
-              Race
-              <input list="races" onChange={changeRace} value={charInfo.race} />
-            </label>
+          <label>
+              <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="basic-addon1">
+                Race
+              </span>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              list="races"
+              value={charInfo.race}
+              aria-describedby="basic-addon1"
+              onChange={changeRace}
+            />
+          </div>
+           
             <datalist id="races">
               <option value="Bard" />
               <option value="Joe" />
               <option value="Cleric" />
               <option value="Barbarian" />
             </datalist>
-  
+  </label>
             <div style={{ margin: "5%" }}></div>
   
             <label>
-              Background
-              <input list="backgrounds" onChange={changeBackground} />
-            </label>
+
+            <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="basic-addon1">
+                Background
+              </span>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              list="backgrounds"
+              aria-describedby="basic-addon1"
+              onChange={changeBackground}
+            />
+            </div>
+
+
             <datalist id="backgrounds">
               <option value="Background1" />
               <option value="Background2" />
               <option value="Background3" />
               <option value="Background4" />
             </datalist>
+</label>
+
           </div>
   
           <div className="col-md-4">
