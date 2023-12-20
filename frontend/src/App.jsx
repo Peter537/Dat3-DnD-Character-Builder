@@ -47,29 +47,27 @@ function App() {
       sessionStorage.getItem("theme") || sessionStorage.setItem("theme", "dark")
     );
 
-    const [charInfo, setCharInfo] = useState({
+  const [charInfo, setCharInfo] = useState({
+    name: "",
+    level: 0,
+    stats: {
+      str: 0,
+      dex: 0,
+      con: 0,
+      int: 0,
+      wis: 0,
+      cha: 0,
+    },
+    race: "",
+    background: {
       name: "",
-      level: 0,
-      stats: {
-        str: 0,
-        dex: 0,
-        con: 0,
-        int: 0,
-        wis: 0,
-        cha: 0,
-      },
-      race: '',
-      background: {
-        name: "",
-        features: [],
-        skills: [],
-        toolprof: [],
-        langprof: []
-      },
-      classes: [],
-    });
-
-
+      features: [],
+      skills: [],
+      toolprof: [],
+      langprof: [],
+    },
+    classes: [],
+  });
 
   return (
     <>
@@ -77,7 +75,7 @@ function App() {
         <header>
           <Header isAuthenticated={isAuthenticated} />
         </header>
-        <div className="container">
+        <div className="">
           <Routes>
             <Route path="/" element={<h1>Home</h1>} />
             <Route path="/l" element={<LoginRegister />}>
@@ -88,12 +86,27 @@ function App() {
               <Route path="register" element={<Register />} />
             </Route>
             <Route path="/profile" element={<MyProfile />} />
-            <Route path="/editor" element={<EditorPage charInfo={charInfo} setCharInfo={setCharInfo}/>}>
-              <Route path="general" element={<General charInfo={charInfo} setCharInfo={setCharInfo} />} />
-              <Route path="features" element={<Features charInfo={charInfo} setCharInfo={setCharInfo} />} />
+            <Route
+              path="/editor"
+              element={
+                <EditorPage charInfo={charInfo} setCharInfo={setCharInfo} />
+              }
+            >
+              <Route
+                path="general"
+                element={
+                  <General charInfo={charInfo} setCharInfo={setCharInfo} />
+                }
+              />
+              <Route
+                path="features"
+                element={
+                  <Features charInfo={charInfo} setCharInfo={setCharInfo} />
+                }
+              />
               <Route path="spells" element={<h1>spellspage</h1>} />
             </Route>
-            <Route path="/characters" element={<CharactersPage/>} />
+            <Route path="/characters" element={<CharactersPage />} />
             <Route path="*" element={<h1>404: Page not found</h1>} />
           </Routes>
         </div>

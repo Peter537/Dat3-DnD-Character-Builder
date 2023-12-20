@@ -1,7 +1,8 @@
-package dat.route;
+package dat.route.mongo;
 
 import dat.config.MongoConfig;
-import dat.controller.BackgroundController;
+import dat.controller.mongo.BackgroundController;
+import dat.route.Route;
 import io.javalin.apibuilder.EndpointGroup;
 
 import java.io.IOException;

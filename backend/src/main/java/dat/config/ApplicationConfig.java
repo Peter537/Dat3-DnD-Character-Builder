@@ -2,7 +2,6 @@ package dat.config;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import com.nimbusds.jose.shaded.json.JSONArray;
 import dat.dao.UserDAO;
 import dat.dto.UserDTO;
 import dat.exception.ApiException;
@@ -12,6 +11,9 @@ import dat.message.ValidationMessage;
 import dat.model.Role;
 import dat.model.User;
 import dat.route.*;
+import dat.route.mongo.BackgroundRoutes;
+import dat.route.mongo.ClassRoutes;
+import dat.route.mongo.SpellRoutes;
 import dat.security.TokenFactory;
 import io.javalin.Javalin;
 import io.javalin.http.ContentType;
@@ -59,7 +61,8 @@ public class ApplicationConfig {
                 new UserRoutes(),
                 new CountryRoutes(),
                 new SpellRoutes(),
-                new BackgroundRoutes()
+                new BackgroundRoutes(),
+                new ClassRoutes()
         ); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
     }
 

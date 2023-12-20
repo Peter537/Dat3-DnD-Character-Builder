@@ -1,10 +1,9 @@
-package dat.route;
+package dat.route.mongo;
 
 import dat.config.MongoConfig;
-import dat.controller.SpellController;
+import dat.controller.mongo.SpellController;
+import dat.route.Route;
 import io.javalin.apibuilder.EndpointGroup;
-
-import java.io.IOException;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;

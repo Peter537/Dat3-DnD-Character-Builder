@@ -1,4 +1,4 @@
-package dat.controller;
+package dat.controller.mongo;
 
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
