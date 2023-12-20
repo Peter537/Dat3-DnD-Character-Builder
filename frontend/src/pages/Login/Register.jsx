@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import facade from "../../util/api.mjs";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -29,7 +30,7 @@ function Register() {
       return;
     }
 
-    // TODO: Implement registration logic here
+    facade.register(email, password);
     window.location.replace("/l/login");
   }
 
