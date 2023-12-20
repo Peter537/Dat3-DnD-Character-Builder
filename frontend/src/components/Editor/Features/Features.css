@@ -1,0 +1,11 @@
+  .feats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .feat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

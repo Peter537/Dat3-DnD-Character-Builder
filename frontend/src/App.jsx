@@ -12,6 +12,7 @@ import LoginRegister from "./pages/Login/LoginRegister";
 import Register from "./pages/Login/Register";
 import EditorPage from "./components/Editor/EditorPage/EditorPage";
 import General from "./components/Editor/General/General";
+import Features from "./components/Editor/Features/Features";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -82,7 +83,7 @@ function App() {
             <Route path="/profile" element={<MyProfile />} />
             <Route path="/editor" element={<EditorPage />}>
               <Route path="general" element={<General charInfo={charInfo} setCharInfo={setCharInfo} />} />
-              <Route path="features" element={<h1>features</h1>} />
+              <Route path="features" element={<Features charInfo={charInfo} setCharInfo={setCharInfo} />} />
               <Route path="spells" element={<h1>spellspage</h1>} />
             </Route>
             <Route path="*" element={<h1>404: Page not found</h1>} />
