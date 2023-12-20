@@ -64,41 +64,40 @@ function Stats({ charInfo, setCharInfo }) {
         </div>
       </div>
 
-      <div className="row stats-row">
-        <div className="col-md-2"></div>
+      <div className="row stats-container">
         <button type="btn btn-primary">Roll stats</button>
         <div className="col-md-2">
           <label htmlFor="str">Str</label>
-          <input type="number" name="str" id="str" min="1" max="20" onChange={(e) => handleChange("str", e.target.value)} />
+          <input className="form-control" type="number" name="str" id="str" min="1" max="20" onChange={(e) => handleChange("str", e.target.value)} />
         </div>
 
         <div className="col-md-2">
           <label htmlFor="dex">Dex</label>
-          <input type="number" name="dex" id="dex" min="1" max="20" onChange={(e) => handleChange("dex", e.target.value)}/>
+          <input className="form-control" type="number" name="dex" id="dex" min="1" max="20" onChange={(e) => handleChange("dex", e.target.value)}/>
         </div>
 
         <div className="col-md-2">
           <label htmlFor="con">Con</label>
-          <input type="number" name="con" id="con" min="1" max="20" onChange={(e) => handleChange("con", e.target.value)} />
+          <input className="form-control" type="number" name="con" id="con" min="1" max="20" onChange={(e) => handleChange("con", e.target.value)} />
         </div>
 
         <div className="col-md-2">
           <label htmlFor="wis">Wis</label>
-          <input type="number" name="wis" id="wis" min="1" max="20" onChange={(e) => handleChange("wis", e.target.value)}/>
+          <input className="form-control" type="number" name="wis" id="wis" min="1" max="20" onChange={(e) => handleChange("wis", e.target.value)}/>
         </div>
 
         <div className="col-md-2">
           <label htmlFor="int">Int</label>
-          <input type="number" name="int" id="int" min="1" max="20" onChange={(e) => handleChange("int", e.target.value)}/>
+          <input className="form-control" type="number" name="int" id="int" min="1" max="20" onChange={(e) => handleChange("int", e.target.value)}/>
         </div>
 
         <div className="col-md-2">
           <label htmlFor="char">Char</label>
-          <input type="number" name="char" id="char" min="1" max="20" onChange={(e) => handleChange("char", e.target.value)}/>
+          <input className="form-control" type="number" name="char" id="char" min="1" max="20" onChange={(e) => handleChange("char", e.target.value)}/>
         </div>
       </div>
 
-      <div className="col-md-4">
+      <div>
         <label htmlFor="img">
           <img
             style={{ width: "40%", height: "40%" }}

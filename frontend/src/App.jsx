@@ -73,9 +73,9 @@ function App() {
     <>
       <BrowserRouter>
         <header>
-          <Header isAuthenticated={isAuthenticated} />
+          <Header isAuthenticated={isAuthenticated} logout={logout} />
         </header>
-        <div className="">
+        <div>
           <Routes>
             <Route path="/" element={<h1>Home</h1>} />
             <Route path="/l" element={<LoginRegister />}>
