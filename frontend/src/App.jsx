@@ -15,6 +15,7 @@ import General from "./components/Editor/General/General";
 import Features from "./components/Editor/Features/Features";
 
 function App() {
+  //#region Login methods
   const [isAuthenticated, setIsAuthenticated] = useState(
     sessionStorage.getItem("token") || false
   );
@@ -26,15 +27,17 @@ function App() {
     }
   }, []);
 
-  function login(bool) {
-    setIsAuthenticated(bool);
-    sessionStorage.setItem("token", bool);
+  function login(token) {
+    setIsAuthenticated(token !== null);
+    sessionStorage.setItem("token", token);
   }
 
   function logout() {
     setIsAuthenticated(false);
     sessionStorage.removeItem("token");
   }
+
+  //#endregion
 
   document
     .getElementsByTagName("body")[0]
@@ -77,7 +80,10 @@ function App() {
           <Routes>
             <Route path="/" element={<h1>Home</h1>} />
             <Route path="/l" element={<LoginRegister />}>
-              <Route path="login" element={<Login onLogin={login} />} />
+              <Route
+                path="login"
+                element={<Login onLogin={(token) => login(token)} />}
+              />
               <Route path="register" element={<Register />} />
             </Route>
             <Route path="/profile" element={<MyProfile />} />
@@ -86,6 +92,7 @@ function App() {
               <Route path="features" element={<Features charInfo={charInfo} setCharInfo={setCharInfo} />} />
               <Route path="spells" element={<h1>spellspage</h1>} />
             </Route>
+            <Route path="/characters" element={<CharactersPage />} />
             <Route path="*" element={<h1>404: Page not found</h1>} />
           </Routes>
         </div>
