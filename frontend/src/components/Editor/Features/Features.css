@@ -1,0 +1,18 @@
+  .feats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .feat-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .feats-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }

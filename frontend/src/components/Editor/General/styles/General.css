@@ -1,0 +1,8 @@
+.dropdown-area {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    margin: 0.5rem 0;
+    width: 100%;
+}
+

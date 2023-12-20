@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -19,6 +22,9 @@ public class Country implements dat.model.Entity<CountryDTO> {
     private String cca2;
     private String name;
     private String svg;
+
+    @OneToMany(mappedBy = "country")
+    private Set<User> users = new HashSet<>();
 
     public Country(String cca2, String name, String svg) {
         this.cca2 = cca2;
