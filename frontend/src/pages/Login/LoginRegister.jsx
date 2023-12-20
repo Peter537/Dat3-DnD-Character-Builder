@@ -11,7 +11,7 @@ function LoginRegister() {
         <div className="col-auto">
           <div className="background-image container-fluid"></div>
         </div>
-        <div className="col-sm-7" style={{ marginTop: "5rem" }}>
+        <div className="col-sm-7" style={{ marginTop: "var(--header-height)" }}>
           <Outlet />
         </div>
       </div>
