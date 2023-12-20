@@ -4,9 +4,10 @@ import dat.dao.UserDAO;
 import dat.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Set;
+import java.time.ZoneId;
 
 @Getter
 @ToString
@@ -14,15 +15,40 @@ import java.util.Set;
 public class UserDTO implements DTO<User> {
 
     private String username;
-    private Set<String> roles;
+    private String description;
+    private Long createdAt;
+    private String countryFlag;
+    private String countryName;
+    private String countryCode;
+    private Integer id;
 
-    public UserDTO(String username, String[] roles) {
+    public UserDTO(String username, int id) {
         this.username = username;
-        this.roles = Set.of(roles);
+        this.id = id;
+    }
+
+    public UserDTO(String username, String description, Long createdAt, String countryCode, String countryFlag, String countryName, Integer id) {
+        this.username = username;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.countryCode = countryCode;
+        this.countryFlag = countryFlag;
+        this.countryName = countryName;
+        this.id = id;
     }
 
     public UserDTO(User user) {
-        this(user.getUsername(), user.getRolesAsStrings().toArray(new String[0]));
+        this(user.getUsername(),
+                user.getDescription(),
+                user.getCreatedOn().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond() * 1000,
+                user.getCountry() != null ? user.getCountry().getCca2() : "",
+                user.getCountry() != null ? user.getCountry().getSvg() : "",
+                user.getCountry() != null ? user.getCountry().getName() : "",
+                user.getId());
+    }
+
+    public void setId(String id) {
+        this.id = Integer.parseInt(id);
     }
 
     @Override

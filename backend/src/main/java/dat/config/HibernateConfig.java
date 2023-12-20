@@ -1,5 +1,6 @@
 package dat.config;
 
+import dat.model.Country;
 import dat.model.Role;
 import dat.model.User;
 import jakarta.persistence.EntityManagerFactory;
@@ -84,7 +85,8 @@ public class HibernateConfig {
         // TODO: asList(X.class, Y.class, Z.class)
         Arrays.asList(
                 User.class,
-                Role.class
+                Role.class,
+                Country.class
         ).forEach(config::addAnnotatedClass);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();

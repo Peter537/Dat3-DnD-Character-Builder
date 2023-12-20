@@ -2,14 +2,16 @@ package dat.config;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.nimbusds.jose.shaded.json.JSONArray;
+import dat.dao.UserDAO;
 import dat.dto.UserDTO;
 import dat.exception.ApiException;
 import dat.exception.AuthorizationException;
 import dat.message.Message;
 import dat.message.ValidationMessage;
 import dat.model.Role;
-import dat.route.Route;
-import dat.route.UserRoutes;
+import dat.model.User;
+import dat.route.*;
 import dat.security.TokenFactory;
 import io.javalin.Javalin;
 import io.javalin.http.ContentType;
@@ -27,8 +29,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Stream;
 
+import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class ApplicationConfig {
@@ -52,7 +54,7 @@ public class ApplicationConfig {
         setExceptionHandling();
         setBeforeHandling();
         setAfterHandling();
-        addRoutes(new UserRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
+        addRoutes(new AuthenticationRoutes(), new UserRoutes(), new CountryRoutes(), new SpellRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
     }
 
     private static void setAccessHandler() {
@@ -62,6 +64,7 @@ public class ApplicationConfig {
     private static void setExceptionHandling() {
         ExceptionManagerHandler em = new ExceptionManagerHandler();
         app.exception(ApiException.class, em::apiException);
+        app.exception(AuthorizationException.class, em::authorizationException);
         app.exception(Exception.class, em::exception);
         app.exception(ConstraintViolationException.class, em::constraintViolationException);
         app.exception(ValidationException.class, em::validationException);
@@ -77,10 +80,16 @@ public class ApplicationConfig {
             ctx.attribute("requestInfo", ctx.req().getMethod() + " " + ctx.req().getRequestURI());
             LOGGER.info("Request {} - {} was received", count, ctx.attribute("requestInfo"));
         });
+        app.options("/*", ctx -> {
+            ctx.header("Access-Control-Allow-Origin", "*");
+            ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+            ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Authentication");
+            ctx.header("Access-Control-Allow-Credentials", "true");
+        });
         app.before(ctx -> {
             ctx.header("Access-Control-Allow-Origin", "*");
             ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
-            ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Authentication");
             ctx.header("Access-Control-Allow-Credentials", "true");
         });
     }
@@ -164,10 +173,8 @@ public class ApplicationConfig {
             try {
                 String token = ctx.header("Authorization").split(" ")[1];
                 UserDTO userDTO = TokenFactory.getInstance().verifyToken(token);
-                return userDTO.getRoles()
-                        .stream()
-                        .map(Role::of)
-                        .anyMatch(permittedRoles::contains);
+                User user = UserDAO.getInstance().readById(userDTO.getId()).orElseThrow(() -> new AuthorizationException(401, "Invalid token"));
+                return user.getRoles().stream().anyMatch(permittedRoles::contains);
             } catch (NullPointerException e) {
                 throw new ApiException(401, "Invalid token");
             }
@@ -179,6 +186,12 @@ public class ApplicationConfig {
         private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionManagerHandler.class);
 
         public void apiException(ApiException e, Context ctx) {
+            ctx.status(e.getStatusCode());
+            ctx.json(new Message(e.getStatusCode(), System.currentTimeMillis(), e.getMessage()));
+            this.logException(e, ctx);
+        }
+
+        public void authorizationException(AuthorizationException e, Context ctx) {
             ctx.status(e.getStatusCode());
             ctx.json(new Message(e.getStatusCode(), System.currentTimeMillis(), e.getMessage()));
             this.logException(e, ctx);

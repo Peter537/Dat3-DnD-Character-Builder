@@ -4,31 +4,43 @@ import React, { useEffect, useState } from "react";
 import "./style/MyProfile.css";
 import defaultProfilePicture from "./assets/default-profile-picture.png";
 import EditProfile from "../../components/MyProfile/EditProfile";
+import facade from "../../util/api.mjs";
 
 function MyProfile() {
-  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+  const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
   const [isEditProfile, setIsEditProfile] = useState(false);
-  const [flag, setFlag] = useState(null);
 
   useEffect(() => {
-    const user = {
-      username: "Username",
-      description:
-        "heeey dudes and dudettes jeg vil gerne have at i alle sammen skal vide at jeg er en mega sej fy rder kan lide at spille comput er spil og øhh ja det var det jeg ville sige, men lige til sidst ville jeg også sige at ",
-      createdOn: 1702402893889,
-      country: "dk",
-    };
-    sessionStorage.setItem("user", JSON.stringify(user));
-    setUser(user);
-    retrieveFlag(user);
-    if (user === undefined || user === null) {
+    let jwt = sessionStorage.getItem("token");
+    if (jwt === undefined || jwt === null) {
       window.location.replace("/");
       return;
     }
-  }, []);
+
+    const encodedPayload = jwt.split(".")[1];
+    const payload = atob(encodedPayload);
+    const decodedPayload = JSON.parse(payload);
+    let payloadUserId = decodedPayload.userId;
+    if (payloadUserId === undefined || payloadUserId === null) {
+      window.location.replace("/");
+      return;
+    }
+
+    setUserId(payloadUserId);
+    let userPromise = facade.fetchData("users/" + payloadUserId, false);
+    userPromise.then((data) => {
+      let userData = data;
+      setUser(userData);
+      if (userData === undefined || userData === null) {
+        window.location.replace("/");
+        return;
+      }
+    });
+  }, [userId]);
 
   function memberSince() {
-    const date = new Date(user?.createdOn);
+    const date = new Date(user?.createdAt);
     const today = new Date();
     const time = (today - date) / 1000;
     return formatTime(time);
@@ -57,31 +69,22 @@ function MyProfile() {
     return result[0] + " and " + result[1];
   }
 
-  function retrieveFlag(user) {
-    setFlag({ svg: "", name: "" });
-    let country = user?.country ? user.country : "";
-    if (!country) {
-      return;
+  async function updateUser(newUser, country) {
+    const updateUser = { ...user, ...newUser };
+    if (country && country !== user.countryCode) {
+      const searchCountry = await facade.fetchData(
+        "countries/cca2/" + country,
+        false
+      );
+      updateUser.countryCode = searchCountry.cca2;
+      updateUser.countryName = searchCountry.name;
+      updateUser.countryFlag = searchCountry.svg;
     }
-
-    fetch("https://restcountries.com/v3.1/alpha/" + country)
-      .then((res) => res.json())
-      .then((data) => {
-        const flag = {
-          svg: data[0].flags.svg,
-          name: data[0].name.common,
-        };
-        setFlag(flag);
-      });
-  }
-
-  function updateUser(newUser) {
-    setUser(newUser);
-    sessionStorage.setItem("user", JSON.stringify(newUser));
-    if (newUser.country !== user.country) {
-      retrieveFlag(newUser);
-    }
-    setIsEditProfile(false);
+    facade.updateUser(userId, updateUser).then((data) => {
+      const updatedUser = data;
+      setUser(updatedUser);
+      setIsEditProfile(false);
+    });
   }
 
   function editProfileButton(event) {
@@ -109,14 +112,14 @@ function MyProfile() {
             <div className="row userinformation">
               <div className="userinformation-username">{user?.username}</div>
               <div>Member for {memberSince()}</div>
-              {flag && (
+              {user?.countryFlag && (
                 <div>
                   <img
                     id="country-flag"
-                    src={flag.svg}
+                    src={user.countryFlag}
                     style={{ marginRight: "5px" }}
                   ></img>
-                  {flag.name}
+                  {user.countryName}
                 </div>
               )}
             </div>

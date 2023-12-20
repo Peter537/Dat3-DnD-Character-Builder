@@ -1,25 +1,27 @@
 package dat.route;
 
 import dat.controller.UserController;
+import dat.dao.UserDAO;
 import io.javalin.apibuilder.EndpointGroup;
 
-import static io.javalin.apibuilder.ApiBuilder.path;
-import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class UserRoutes implements Route {
 
-    private final UserController userController = new UserController();
+    private final UserController userController = new UserController(UserDAO.getInstance());
 
     @Override
     public String getBasePath() {
-        return "/auth";
+        return "/users";
     }
 
     @Override
     public EndpointGroup getRoutes() {
         return () -> {
-            path("/login", () -> post(userController::login));
-            path("/register", () -> post(userController::register));
+            path("/{id}", () -> {
+                get(userController::getById);
+                put(userController::put);
+            });
         };
     }
 }

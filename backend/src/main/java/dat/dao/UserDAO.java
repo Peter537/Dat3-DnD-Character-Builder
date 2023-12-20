@@ -1,11 +1,15 @@
 package dat.dao;
 
 import dat.config.HibernateConfig;
+import dat.dto.UserDTO;
+import dat.dto.UserInfoDTO;
 import dat.exception.AuthorizationException;
+import dat.model.Country;
 import dat.model.Role;
 import dat.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 
 import java.util.Optional;
 
@@ -27,21 +31,33 @@ public class UserDAO extends DAO<User> {
         return INSTANCE;
     }
 
-    public User getVerifiedUser(String username, String password) throws AuthorizationException {
+    public User getVerifiedUser(UserInfoDTO userInfo) throws AuthorizationException {
+        return getVerifiedUser(userInfo.email(), userInfo.password());
+    }
+
+    public User getVerifiedUser(String email, String password) throws AuthorizationException {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            User user = em.find(User.class, username);
+            User user = em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
             if (user == null || !user.checkPassword(password)) {
-                throw new AuthorizationException(401, "Invalid user name or password");
+                throw new AuthorizationException(401, "Invalid email or password");
             }
 
             em.getTransaction().commit();
             return user;
+        } catch (NoResultException e) {
+            throw new AuthorizationException(401, "Invalid email or password");
         }
     }
 
-    public User registerUser(String username, String password, String userRole) throws AuthorizationException {
-        User user = new User(username, password);
+    public User registerUser(UserInfoDTO userInfo) throws AuthorizationException {
+        return registerUser(userInfo.email(), userInfo.username(), userInfo.password(), "USER");
+    }
+
+    public User registerUser(String email, String username, String password, String userRole) throws AuthorizationException {
+        User user = new User(email, username, password);
         Optional<Role> role = ROLE_DAO.readById(userRole);
         user.addRole(role.or(() -> Optional.of(createRole(userRole))).get());
         try (EntityManager em = emf.createEntityManager()) {
@@ -50,13 +66,27 @@ public class UserDAO extends DAO<User> {
             em.getTransaction().commit();
             return user;
         } catch (Exception e) {
-            throw new AuthorizationException(400, "Username already exists");
+            throw new AuthorizationException(400, "Email already exists");
         }
     }
 
     private Role createRole(String role) {
         Role newRole = new Role(role);
         return ROLE_DAO.create(newRole);
+    }
+
+    public User update(UserDTO userDTO) {
+        Country country = new DAO<>(Country.class, HibernateConfig.getEntityManagerFactory()).readById(userDTO.getCountryCode())
+                .orElse(new Country(userDTO.getCountryCode(), userDTO.getCountryName(), userDTO.getCountryFlag()));
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            User user = em.find(User.class, userDTO.getId());
+            user.setUsername(userDTO.getUsername());
+            user.setDescription(userDTO.getDescription());
+            user.setCountry(country);
+            em.getTransaction().commit();
+            return user;
+        }
     }
 
     @Override
