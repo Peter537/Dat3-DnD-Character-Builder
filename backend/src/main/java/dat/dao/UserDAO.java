@@ -1,8 +1,10 @@
 package dat.dao;
 
 import dat.config.HibernateConfig;
+import dat.dto.UserDTO;
 import dat.dto.UserInfoDTO;
 import dat.exception.AuthorizationException;
+import dat.model.Country;
 import dat.model.Role;
 import dat.model.User;
 import jakarta.persistence.EntityManager;
@@ -71,6 +73,20 @@ public class UserDAO extends DAO<User> {
     private Role createRole(String role) {
         Role newRole = new Role(role);
         return ROLE_DAO.create(newRole);
+    }
+
+    public User update(UserDTO userDTO) {
+        Country country = new DAO<>(Country.class, HibernateConfig.getEntityManagerFactory()).readById(userDTO.getCountryCode())
+                .orElse(new Country(userDTO.getCountryCode(), userDTO.getCountryName(), userDTO.getCountryFlag()));
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            User user = em.find(User.class, userDTO.getId());
+            user.setUsername(userDTO.getUsername());
+            user.setDescription(userDTO.getDescription());
+            user.setCountry(country);
+            em.getTransaction().commit();
+            return user;
+        }
     }
 
     @Override

@@ -51,7 +51,7 @@ public class User implements Serializable, dat.model.Entity<UserDTO> {
     @Setter
     private LocalDateTime updatedOn;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     @Setter
     private Country country;
