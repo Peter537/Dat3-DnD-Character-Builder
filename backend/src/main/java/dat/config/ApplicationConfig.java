@@ -11,9 +11,7 @@ import dat.message.Message;
 import dat.message.ValidationMessage;
 import dat.model.Role;
 import dat.model.User;
-import dat.route.Route;
-import dat.route.AuthenticationRoutes;
-import dat.route.UserRoutes;
+import dat.route.*;
 import dat.security.TokenFactory;
 import io.javalin.Javalin;
 import io.javalin.http.ContentType;
@@ -56,26 +54,7 @@ public class ApplicationConfig {
         setExceptionHandling();
         setBeforeHandling();
         setAfterHandling();
-        addRoutes(new AuthenticationRoutes(), new UserRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
-        app.routes(() -> path("/mongo", () -> {
-            get(ctx -> {
-                try {
-                    List<String> collections = new ArrayList<>();
-                    MongoConfig.getDatabase().listCollectionNames().into(collections);
-                    String jsonArray = JSONArray.toJSONString(collections);
-                    ctx.result(jsonArray);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            get("/spells", ctx -> {
-                try {
-                    ctx.result(Objects.requireNonNull(Objects.requireNonNull(MongoConfig.getDatabase().getCollection("Spell").find().skip(8)).first()).toJson());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }));
+        addRoutes(new AuthenticationRoutes(), new UserRoutes(), new CountryRoutes(), new SpellRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
     }
 
     private static void setAccessHandler() {
