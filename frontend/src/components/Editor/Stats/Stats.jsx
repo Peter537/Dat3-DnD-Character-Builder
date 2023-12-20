@@ -64,8 +64,7 @@ function Stats({ charInfo, setCharInfo }) {
         </div>
       </div>
 
-      <div className="row stats-row">
-        <div className="col-md-2"></div>
+      <div className="row stats-container">
         <button type="btn btn-primary">Roll stats</button>
         <div className="col-md-2">
           <label htmlFor="str">Str</label>
@@ -98,7 +97,7 @@ function Stats({ charInfo, setCharInfo }) {
         </div>
       </div>
 
-      <div className="col-md-4">
+      <div>
         <label htmlFor="img">
           <img
             style={{ width: "40%", height: "40%" }}
