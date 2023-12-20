@@ -54,7 +54,13 @@ public class ApplicationConfig {
         setExceptionHandling();
         setBeforeHandling();
         setAfterHandling();
-        addRoutes(new AuthenticationRoutes(), new UserRoutes(), new CountryRoutes(), new SpellRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
+        addRoutes(
+                new AuthenticationRoutes(),
+                new UserRoutes(),
+                new CountryRoutes(),
+                new SpellRoutes(),
+                new BackgroundRoutes()
+        ); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
     }
 
     private static void setAccessHandler() {

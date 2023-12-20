@@ -35,8 +35,11 @@ public class SpellRoutes implements Route {
                     get(spellController::getByBook);
                 });
             });
-            path("/{level}", () -> {
+            path("level/{level}", () -> {
                 get(spellController::getByLevel);
+            });
+            path("school/{school}", () -> {
+                get(spellController::getBySchool);
             });
         });
     }
