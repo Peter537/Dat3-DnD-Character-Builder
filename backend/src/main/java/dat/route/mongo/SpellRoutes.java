@@ -1,10 +1,9 @@
-package dat.route;
+package dat.route.mongo;
 
 import dat.config.MongoConfig;
-import dat.controller.SpellController;
+import dat.controller.mongo.SpellController;
+import dat.route.Route;
 import io.javalin.apibuilder.EndpointGroup;
-
-import java.io.IOException;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
@@ -29,8 +28,17 @@ public class SpellRoutes implements Route {
     @Override
     public EndpointGroup getRoutes() {
         return () -> path("/spells", () -> {
-            path("/book/{book}", () -> {
-                get(spellController::getAllByBook);
+            path("/book", () -> {
+                get(spellController::getSpellBooks);
+                path("/{book}", () -> {
+                    get(spellController::getByBook);
+                });
+            });
+            path("level/{level}", () -> {
+                get(spellController::getByLevel);
+            });
+            path("school/{school}", () -> {
+                get(spellController::getBySchool);
             });
         });
     }
