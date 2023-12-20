@@ -1,0 +1,6 @@
+.nav-box {
+    background-color: var(--background-color);
+    border-top: solid 1px var(--bs-body-color);
+    border-bottom: solid 1px var(--bs-body-color);
+    width: 100%;
+  }
