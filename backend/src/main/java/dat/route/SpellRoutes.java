@@ -29,8 +29,14 @@ public class SpellRoutes implements Route {
     @Override
     public EndpointGroup getRoutes() {
         return () -> path("/spells", () -> {
-            path("/book/{book}", () -> {
-                get(spellController::getAllByBook);
+            path("/book", () -> {
+                get(spellController::getSpellBooks);
+                path("/{book}", () -> {
+                    get(spellController::getByBook);
+                });
+            });
+            path("/{level}", () -> {
+                get(spellController::getByLevel);
             });
         });
     }
