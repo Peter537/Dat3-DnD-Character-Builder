@@ -27,6 +27,7 @@ function Login({ onLogin }) {
       sessionStorage.setItem("token", jwt);
 
       onLogin(jwt);
+      window.location.replace("/profile");
     });
   }
 

@@ -10,7 +10,7 @@ function EditProfile({ user, updateUser }) {
 
   useEffect(() => {
     facade.fetchData("countries", false).then((data) => {
-      setCountries(data);
+      setCountries(data.sort((a, b) => (a.name > b.name ? 1 : -1)));
     });
   }, []);
 

@@ -9,7 +9,7 @@ function handleHttpErrors(res) {
 
 function apiFacade() {
   const login = async (email, password) => {
-    const options = makeOptions("POST", true, {
+    const options = makeOptions("POST", false, {
       email: email,
       password: password,
     });
@@ -18,9 +18,10 @@ function apiFacade() {
     return res_1.token;
   };
 
-  const register = async (email, password) => {
-    const options = makeOptions("POST", true, {
+  const register = async (email, username, password) => {
+    const options = makeOptions("POST", false, {
       email: email,
+      username: username,
       password: password,
     });
     const res = await fetch(URL + "/api/v1/auth/register", options);

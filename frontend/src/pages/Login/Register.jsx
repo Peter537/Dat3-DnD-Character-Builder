@@ -30,7 +30,7 @@ function Register() {
       return;
     }
 
-    facade.register(email, password);
+    facade.register(email, username, password);
     window.location.replace("/l/login");
   }
 
@@ -105,7 +105,7 @@ function Register() {
               Submit
             </button>
           </form>
-          <Link id="login" className="form-text" to={"/L/Login"}>
+          <Link id="login" className="form-text" to={"/l/login"}>
             If you already have an account, please login here
           </Link>
         </div>

@@ -7,7 +7,7 @@ import "./style/Header.css";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import logoWhite from "./assets/logo-white.png";
 
-function Header({ isAuthenticated }) {
+function Header({ isAuthenticated, logout }) {
   const [theme, setTheme] = useState(sessionStorage.getItem("theme"));
   return (
     <nav
@@ -49,12 +49,26 @@ function Header({ isAuthenticated }) {
                     My Profile
                   </span>
                 </Link>
+                <Link
+                  className="nav-link navbar-brand text-light"
+                  to="/"
+                  onClick={() => logout()}
+                >
+                  <span className="p-2 border rounded-3 border-light">
+                    Logout
+                  </span>
+                </Link>
               </div>
             </>
           ) : (
             <div className="navbar-nav ms-auto">
               <Link className="nav-link navbar-brand text-light" to="/l/login">
-                <span className="me-2">Login</span>
+                <span className="p-2 border rounded-3 border-light">Login</span>
+              </Link>
+              <Link
+                className="nav-link navbar-brand text-light"
+                to="/l/register"
+              >
                 <span className="p-2 border rounded-3 border-light">
                   Register
                 </span>
