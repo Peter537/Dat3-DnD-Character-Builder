@@ -11,10 +11,7 @@ import dat.message.Message;
 import dat.message.ValidationMessage;
 import dat.model.Role;
 import dat.model.User;
-import dat.route.Route;
-import dat.route.AuthenticationRoutes;
-import dat.route.SpellRoutes;
-import dat.route.UserRoutes;
+import dat.route.*;
 import dat.security.TokenFactory;
 import io.javalin.Javalin;
 import io.javalin.http.ContentType;
@@ -57,7 +54,7 @@ public class ApplicationConfig {
         setExceptionHandling();
         setBeforeHandling();
         setAfterHandling();
-        addRoutes(new AuthenticationRoutes(), new UserRoutes(), new SpellRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
+        addRoutes(new AuthenticationRoutes(), new UserRoutes(), new CountryRoutes(), new SpellRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
     }
 
     private static void setAccessHandler() {
