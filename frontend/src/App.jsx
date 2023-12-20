@@ -75,7 +75,7 @@ function App() {
         <header>
           <Header isAuthenticated={isAuthenticated} logout={logout} />
         </header>
-        <div className="container">
+        <div>
           <Routes>
             <Route path="/" element={<h1>Home</h1>} />
             <Route path="/l" element={<LoginRegister />}>
