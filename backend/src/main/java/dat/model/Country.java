@@ -1,5 +1,6 @@
 package dat.model;
 
+import dat.dto.CountryDTO;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class Country {
+public class Country implements dat.model.Entity<CountryDTO> {
 
     @Id
     private String cca2;
@@ -23,5 +24,17 @@ public class Country {
         this.cca2 = cca2;
         this.name = name;
         this.svg = svg;
+    }
+
+    @Override
+    public void setId(Object id) {
+        if (id != null) {
+            this.cca2 = String.valueOf(id);
+        }
+    }
+
+    @Override
+    public CountryDTO toDTO() {
+        return new CountryDTO(this);
     }
 }
