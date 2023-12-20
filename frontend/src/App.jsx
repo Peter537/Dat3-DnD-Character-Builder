@@ -13,6 +13,7 @@ import Register from "./pages/Login/Register";
 import EditorPage from "./components/Editor/EditorPage/EditorPage";
 import General from "./components/Editor/General/General";
 import Features from "./components/Editor/Features/Features";
+import CharactersPage from "./pages/CharactersPage/CharactersPage";
 
 function App() {
   //#region Login methods
@@ -87,12 +88,12 @@ function App() {
               <Route path="register" element={<Register />} />
             </Route>
             <Route path="/profile" element={<MyProfile />} />
-            <Route path="/editor" element={<EditorPage />}>
+            <Route path="/editor" element={<EditorPage charInfo={charInfo} setCharInfo={setCharInfo}/>}>
               <Route path="general" element={<General charInfo={charInfo} setCharInfo={setCharInfo} />} />
               <Route path="features" element={<Features charInfo={charInfo} setCharInfo={setCharInfo} />} />
               <Route path="spells" element={<h1>spellspage</h1>} />
             </Route>
-            <Route path="/characters" element={<CharactersPage />} />
+            <Route path="/characters" element={<CharactersPage/>} />
             <Route path="*" element={<h1>404: Page not found</h1>} />
           </Routes>
         </div>

@@ -13,20 +13,26 @@ const Features = ({ feats = ["Feat1", "Feat2", "Feat3"]}) => {
   };
 
   return (
+<>
+    <h1>Choose a Feat</h1>
     <div className="feats-container">
-      <h1>Choose a Feat</h1>
+      
       <div className="feats-grid">
         {feats.map((feat, index) => (
-          <div key={index} className="feat-item">
-            {feat}
+          <div key={index} className="feat-item" style={{border: "solid 1px red"}}>
+            <p style={{marginRight: "5%"}}>{feat}</p>
             <button onClick={() => selectFeat(feat)}>
               {selectedFeats.includes(feat) ? 'Deselect' : 'Select'}
             </button>
           </div>
         ))}
       </div>
-      <p>Selected Feats: {selectedFeats.join(', ')}</p>
     </div>
+
+    <div style={{margin: "1%"}}></div>
+
+    <p>Selected Feats: {selectedFeats.join(', ')}</p>
+    </>
   );
 };
 

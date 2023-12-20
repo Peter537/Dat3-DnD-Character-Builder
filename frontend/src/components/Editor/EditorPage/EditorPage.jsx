@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import MyNavbar from "../EditorNav/EditorNav";
 import Stats from "../Stats/Stats";
 import React, { useState } from "react";
@@ -7,17 +8,18 @@ import "../EditorPage/EditorPage.css";
 // Import assets
 import ENav from "../EditorNav/EditorNav";
 
-function EditorPage() {
+function EditorPage({charInfo, setCharInfo}) {
  
 
   return (
     <div className="editorpage-container">
-      <h1>Editor Page</h1>
-      <Stats />
+      <h1 className="text-center">Editor Page</h1>
+      <div className="row" style={{ margin: "3%" }}></div>
+      <Stats charInfo={charInfo} setCharInfo={setCharInfo} />
 
       <div className="row" style={{ margin: "5%" }}></div>
       <ENav />
-      <div className="editorpage-tab">
+      <div>
       <Outlet/>
       </div>
     </div>
