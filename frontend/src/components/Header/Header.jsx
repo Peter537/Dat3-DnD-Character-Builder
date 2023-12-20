@@ -54,7 +54,9 @@ function Header({ isAuthenticated, logout }) {
                   to="/"
                   onClick={() => logout()}
                 >
-                  Logout
+                  <span className="p-2 border rounded-3 border-light">
+                    Logout
+                  </span>
                 </Link>
               </div>
             </>
