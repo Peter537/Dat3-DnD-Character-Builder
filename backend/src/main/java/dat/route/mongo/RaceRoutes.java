@@ -26,6 +26,9 @@ public class RaceRoutes implements Route {
     public EndpointGroup getRoutes() {
         return () -> path("/race", () -> {
             get(raceController::getRaces);
+            path("/{raceName}", () -> {
+                get(raceController::getRaceByName);
+            });
         });
     }
 
