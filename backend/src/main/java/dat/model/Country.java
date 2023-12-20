@@ -15,7 +15,13 @@ import lombok.ToString;
 public class Country {
 
     @Id
-    private String id;
+    private String cca2;
     private String name;
-    private String code;
+    private String svg;
+
+    public Country(String cca2, String name, String svg) {
+        this.cca2 = cca2;
+        this.name = name;
+        this.svg = svg;
+    }
 }
