@@ -28,6 +28,13 @@ function apiFacade() {
     return res_1.token;
   };
 
+  const updateUser = async (id, user) => {
+    const options = makeOptions("PUT", true, user);
+    const res = await fetch(URL + "/api/v1/users/" + id, options);
+    const res_1 = await handleHttpErrors(res);
+    return res_1;
+  };
+
   const fetchData = async (route, addToken) => {
     const options = makeOptions("GET", addToken || true);
     return fetch(URL + "/api/v1/" + route, options).then(handleHttpErrors);
@@ -77,6 +84,7 @@ function apiFacade() {
     login,
     register,
     fetchData,
+    updateUser,
   };
 }
 

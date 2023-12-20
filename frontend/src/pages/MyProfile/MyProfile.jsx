@@ -7,31 +7,37 @@ import EditProfile from "../../components/MyProfile/EditProfile";
 import facade from "../../util/api.mjs";
 
 function MyProfile() {
+  const [userId, setUserId] = useState(null);
   const [user, setUser] = useState(null);
   const [isEditProfile, setIsEditProfile] = useState(false);
-  const [flag, setFlag] = useState(null);
 
   useEffect(() => {
     let jwt = sessionStorage.getItem("token");
+    if (jwt === undefined || jwt === null) {
+      window.location.replace("/");
+      return;
+    }
+
     const encodedPayload = jwt.split(".")[1];
     const payload = atob(encodedPayload);
     const decodedPayload = JSON.parse(payload);
-    const userId = decodedPayload.userId;
-    console.log(userId);
-    let userPromise = facade.fetchData("users/" + userId, false);
-    userPromise.then((data) => {
-      let user = data;
-      console.log("user", user);
+    let payloadUserId = decodedPayload.userId;
+    if (payloadUserId === undefined || payloadUserId === null) {
+      window.location.replace("/");
+      return;
+    }
 
-      user.countryCode = "dk"; // to delete
-      setUser(user);
-      retrieveFlag(user);
-      if (user === undefined || user === null) {
+    setUserId(payloadUserId);
+    let userPromise = facade.fetchData("users/" + payloadUserId, false);
+    userPromise.then((data) => {
+      let userData = data;
+      setUser(userData);
+      if (userData === undefined || userData === null) {
         window.location.replace("/");
         return;
       }
     });
-  }, []);
+  }, [userId]);
 
   function memberSince() {
     const date = new Date(user?.createdAt);
@@ -63,31 +69,22 @@ function MyProfile() {
     return result[0] + " and " + result[1];
   }
 
-  function retrieveFlag(user) {
-    setFlag({ svg: "", name: "" });
-    let country = user?.countryCode ? user.countryCode : "";
-    if (!country) {
-      return;
+  async function updateUser(newUser, country) {
+    const updateUser = { ...user, ...newUser };
+    if (country && country !== user.countryCode) {
+      const searchCountry = await facade.fetchData(
+        "countries/cca2/" + country,
+        false
+      );
+      updateUser.countryCode = searchCountry.cca2;
+      updateUser.countryName = searchCountry.name;
+      updateUser.countryFlag = searchCountry.svg;
     }
-
-    fetch("https://restcountries.com/v3.1/alpha/" + country)
-      .then((res) => res.json())
-      .then((data) => {
-        const flag = {
-          svg: data[0].flags.svg,
-          name: data[0].name.common,
-        };
-        setFlag(flag);
-      });
-  }
-
-  function updateUser(newUser) {
-    setUser(newUser);
-    sessionStorage.setItem("user", JSON.stringify(newUser));
-    if (newUser.country !== user.country) {
-      retrieveFlag(newUser);
-    }
-    setIsEditProfile(false);
+    facade.updateUser(userId, updateUser).then((data) => {
+      const updatedUser = data;
+      setUser(updatedUser);
+      setIsEditProfile(false);
+    });
   }
 
   function editProfileButton(event) {
@@ -115,14 +112,14 @@ function MyProfile() {
             <div className="row userinformation">
               <div className="userinformation-username">{user?.username}</div>
               <div>Member for {memberSince()}</div>
-              {flag && (
+              {user?.countryFlag && (
                 <div>
                   <img
                     id="country-flag"
-                    src={flag.svg}
+                    src={user.countryFlag}
                     style={{ marginRight: "5px" }}
                   ></img>
-                  {flag.name}
+                  {user.countryName}
                 </div>
               )}
             </div>
