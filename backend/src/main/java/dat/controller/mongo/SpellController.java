@@ -35,11 +35,14 @@ public class SpellController {
 
     public void getByClass(Context ctx) {
         throw new UnsupportedOperationException("Not supported yet.");
-        // Notes: So far there is no plan for how this will be made, but there exist 2 entities containing lists of which spells are available to which classes.
-        // The first is part of the "getSpellBooks" method, which returns a list of all the books, and the classes that can use them.
+        // Notes: So far there is no plan for how this will be made, but there exist 2
+        // entities containing lists of which spells are available to which classes.
+        // The first is part of the "getSpellBooks" method, which returns a list of all
+        // the books, and the classes that can use them.
         // The second is in the Lookup tables collections.
         // Solutions:
-        // Filter statement that sorts through the spellbooks, and returns the requested class.
+        // Filter statement that sorts through the spellbooks, and returns the requested
+        // class.
     }
 
     public void getByLevel(Context ctx) {

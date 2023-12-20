@@ -13,6 +13,7 @@ import dat.model.User;
 import dat.route.*;
 import dat.route.mongo.BackgroundRoutes;
 import dat.route.mongo.ClassRoutes;
+import dat.route.mongo.FeatRoutes;
 import dat.route.mongo.SpellRoutes;
 import dat.security.TokenFactory;
 import io.javalin.Javalin;
@@ -32,7 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class ApplicationConfig {
@@ -50,7 +50,10 @@ public class ApplicationConfig {
             config.plugins.enableDevLogging(); // enables extensive development logging in terminal
             config.http.defaultContentType = CONTENT_TYPE; // default content type for requests
             config.routing.contextPath = CONTEXT_PATH; // base path for all routes
-            config.plugins.register(new RouteOverviewPlugin(ROUTE_OVERVIEW_PATH)); // html overview of all registered routes at "/" for api documentation: https://javalin.io/news/2019/08/11/javalin-3.4.1-released.html
+            config.plugins.register(new RouteOverviewPlugin(ROUTE_OVERVIEW_PATH)); // html overview of all registered
+                                                                                   // routes at "/" for api
+                                                                                   // documentation:
+                                                                                   // https://javalin.io/news/2019/08/11/javalin-3.4.1-released.html
         });
         setAccessHandler();
         setExceptionHandling();
@@ -62,8 +65,8 @@ public class ApplicationConfig {
                 new CountryRoutes(),
                 new SpellRoutes(),
                 new BackgroundRoutes(),
-                new ClassRoutes()
-        ); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
+                new ClassRoutes(),
+                new FeatRoutes()); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
     }
 
     private static void setAccessHandler() {
@@ -141,7 +144,8 @@ public class ApplicationConfig {
     }
 
     public static String getProperty(String propName) throws IOException {
-        try (InputStream is = HibernateConfig.class.getClassLoader().getResourceAsStream("properties-from-pom.properties")) {
+        try (InputStream is = HibernateConfig.class.getClassLoader()
+                .getResourceAsStream("properties-from-pom.properties")) {
             Properties prop = new Properties();
             prop.load(is);
             return prop.getProperty(propName);
@@ -160,7 +164,8 @@ public class ApplicationConfig {
             this.CONTEXT_PATH = contextPath;
         }
 
-        public void accessManagerHandler(Handler handler, Context ctx, Set<? extends RouteRole> permittedRoles) throws Exception {
+        public void accessManagerHandler(Handler handler, Context ctx, Set<? extends RouteRole> permittedRoles)
+                throws Exception {
             String path = ctx.path();
             if (path.equals(CONTEXT_PATH + "/auth/login")
                     || path.equals(CONTEXT_PATH + "/auth/register")
@@ -178,11 +183,13 @@ public class ApplicationConfig {
             handler.handle(ctx);
         }
 
-        private boolean isAuthorized(Context ctx, Set<? extends RouteRole> permittedRoles) throws AuthorizationException, ApiException {
+        private boolean isAuthorized(Context ctx, Set<? extends RouteRole> permittedRoles)
+                throws AuthorizationException, ApiException {
             try {
                 String token = ctx.header("Authorization").split(" ")[1];
                 UserDTO userDTO = TokenFactory.getInstance().verifyToken(token);
-                User user = UserDAO.getInstance().readById(userDTO.getId()).orElseThrow(() -> new AuthorizationException(401, "Invalid token"));
+                User user = UserDAO.getInstance().readById(userDTO.getId())
+                        .orElseThrow(() -> new AuthorizationException(401, "Invalid token"));
                 return user.getRoles().stream().anyMatch(permittedRoles::contains);
             } catch (NullPointerException e) {
                 throw new ApiException(401, "Invalid token");
@@ -233,7 +240,8 @@ public class ApplicationConfig {
             ValidationError<Object> error = errorList.isEmpty() ? null : errorList.get(0);
             if (error != null) {
                 ctx.status(statusCode);
-                ctx.json(new ValidationMessage(System.currentTimeMillis(), error.getMessage(), error.getArgs(), error.getValue()));
+                ctx.json(new ValidationMessage(System.currentTimeMillis(), error.getMessage(), error.getArgs(),
+                        error.getValue()));
             } else {
                 ctx.status(500);
                 ctx.json(new Message(500, System.currentTimeMillis(), e.getMessage()));
