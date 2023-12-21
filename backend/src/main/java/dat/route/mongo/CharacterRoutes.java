@@ -32,9 +32,9 @@ public class CharacterRoutes implements Route {
 //                     put(characterController::updateCharacter);
 //                     delete(characterController::deleteCharacter);
                  });
-                 path("/user/{userId}", () -> {
-                     get(characterController::getByUser);
-                 });
+                    path("/user", () -> {
+                        get(characterController::getByUser);
+                    });
             });
         };
     }
