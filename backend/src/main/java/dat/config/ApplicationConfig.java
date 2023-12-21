@@ -48,9 +48,9 @@ public class ApplicationConfig {
             config.http.defaultContentType = CONTENT_TYPE; // default content type for requests
             config.routing.contextPath = CONTEXT_PATH; // base path for all routes
             config.plugins.register(new RouteOverviewPlugin(ROUTE_OVERVIEW_PATH)); // html overview of all registered
-                                                                                   // routes at "/" for api
-                                                                                   // documentation:
-                                                                                   // https://javalin.io/news/2019/08/11/javalin-3.4.1-released.html
+            // routes at "/" for api
+            // documentation:
+            // https://javalin.io/news/2019/08/11/javalin-3.4.1-released.html
         });
         setAccessHandler();
         setExceptionHandling();
@@ -65,7 +65,7 @@ public class ApplicationConfig {
                 new ClassRoutes(),
                 new FeatRoutes(),
                 new RaceRoutes()
-                ); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
+        ); // TODO: addRoutes(new XRoutes(), new YRoutes(), new ZRoutes());
     }
 
     private static void setAccessHandler() {
@@ -171,6 +171,20 @@ public class ApplicationConfig {
                     || path.equals(CONTEXT_PATH + "/routes")
                     || permittedRoles.isEmpty()
                     || permittedRoles.contains(Role.of("ANYONE"))) {
+                if (ctx.method().toString().equals("PUT") && path.startsWith(CONTEXT_PATH + "/users/")) {
+                    try {
+                        String token = ctx.header("Authorization").split(" ")[1];
+                        UserDTO userDTO = TokenFactory.getInstance().verifyToken(token);
+                        User user = UserDAO.getInstance().readById(userDTO.getId())
+                                .orElseThrow(() -> new AuthorizationException(401, "Invalid token"));
+                        String id = ctx.pathParam("id");
+                        if (!user.getId().toString().equals(id)) {
+                            throw new AuthorizationException(401, "You are not authorized to perform this action");
+                        }
+                    } catch (NullPointerException e) {
+                        throw new ApiException(401, "Invalid token");
+                    }
+                }
                 handler.handle(ctx);
                 return;
             }
