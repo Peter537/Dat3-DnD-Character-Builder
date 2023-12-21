@@ -35,10 +35,12 @@ public class BackgroundController {
     }
 
     public void getByName(Context ctx) {
+        String name = ctx.pathParam("name");
+
         MongoCollection<Document> backgrounds = db.getCollection("Background");
         AggregateIterable<Document> result = backgrounds.aggregate(Arrays.asList(new Document("$unwind", "$background"),
                 new Document("$match",
-                        new Document("background.name", "Acolyte")))
+                        new Document("background.name", name)))
         );
         ctx.json(Objects.requireNonNull(result.first()).toJson());
     }
