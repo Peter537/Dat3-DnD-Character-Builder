@@ -48,25 +48,27 @@ function App() {
     );
 
   const [charInfo, setCharInfo] = useState({
-    name: "",
-    level: 0,
-    stats: {
-      str: 0,
-      dex: 0,
-      con: 0,
-      int: 0,
-      wis: 0,
-      cha: 0,
-    },
-    race: "",
-    background: {
+    data: {
       name: "",
-      features: [],
-      skills: [],
-      toolprof: [],
-      langprof: [],
+      level: 0,
+      stats: {
+        str: 0,
+        dex: 0,
+        con: 0,
+        int: 0,
+        wis: 0,
+        cha: 0,
+      },
+      race: "",
+      background: {
+        name: "",
+        features: [],
+        skills: [],
+        toolprof: [],
+        langprof: [],
+      },
+      classes: [],
     },
-    classes: [],
   });
 
   return (
@@ -90,8 +92,7 @@ function App() {
               path="/editor"
               element={
                 <EditorPage charInfo={charInfo} setCharInfo={setCharInfo} />
-              }
-            >
+              }>
               <Route
                 path="general"
                 element={

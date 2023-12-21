@@ -1,6 +1,8 @@
 package dat.controller.mongo;
 
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.mongodb.client.AggregateIterable;
@@ -34,4 +36,23 @@ public class RaceController {
         );
         ctx.json(Objects.requireNonNull(result.first()).toJson());
     }
+
+// ... (other imports and code)
+
+    public void getAllRaceNames(Context ctx) {
+        MongoCollection<Document> races = db.getCollection("Race");
+        ArrayList<String> raceNames = new ArrayList<>();
+
+        races.find().projection(new Document("race.name", 1)).forEach(document -> {
+            List<Document> raceEntries = document.getList("race", Document.class);
+            for (Document raceEntry : raceEntries) {
+                String name = raceEntry.getString("name");
+                raceNames.add(name);
+            }
+        });
+
+        ctx.json(raceNames);
+    }
+
+
 }

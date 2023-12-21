@@ -6,30 +6,39 @@ function Stats({ charInfo, setCharInfo }) {
   const changeName = (event) => {
     setCharInfo({
       ...charInfo,
+      data : {
+        ...charInfo.data,
       name: event.target.value,
+      }
     });
   };
 
   const changeLevel = (event) => {
     setCharInfo({
       ...charInfo,
+      data : {
+        ...charInfo.data,
       level: event.target.value,
+      }
     });
   };
 
   const handleChange = (attribute, value) => {
     setCharInfo({
       ...charInfo,
+      data: {
+        ...charInfo.data,
       stats: {
-        ...charInfo.stats,
+        ...charInfo.data.stats,
         [attribute]: value,
+      }
       },
     });
   };
 
 
   useEffect(() => {
-    console.log(charInfo);
+    console.log(charInfo.data);
   }, [charInfo]);
 
   return (

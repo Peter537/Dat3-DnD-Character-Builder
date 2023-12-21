@@ -20,7 +20,7 @@ function AddClass({ charInfo, setCharInfo, index }) {
         return;
       } else {
 
-        const updatedClasses = charInfo.classes.map((item, i) => {
+        const updatedClasses = charInfo.data.classes.map((item, i) => {
             if (i === index) {
               // Update properties with new values
               return { name: newClassName, level: newClassLevel };
@@ -31,23 +31,29 @@ function AddClass({ charInfo, setCharInfo, index }) {
           // Update the state with the modified classes array
           setCharInfo({
             ...charInfo,
+            data : {
+              ...charInfo.data,
             classes: updatedClasses,
+            }
           });
         }
   
     };
   
     const deleteClass = () => {
-      const updatedClasses = charInfo.classes.filter((item, i) => i !== index);
+      const updatedClasses = charInfo.data.classes.filter((item, i) => i !== index);
   
       setCharInfo({
         ...charInfo,
+        data : {
+          ...charInfo.data,
         classes: updatedClasses,
+        }
       });
     };
 
     useEffect(() => {
-        console.log(charInfo);
+        console.log(charInfo.data);
       }, [charInfo]);
   
     return (

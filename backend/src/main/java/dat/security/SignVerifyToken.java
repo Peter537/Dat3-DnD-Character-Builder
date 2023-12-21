@@ -77,7 +77,7 @@ public class SignVerifyToken {
         }
 
         String username = claimsSet.getClaim("username").toString();
-        int id = Integer.parseInt(claimsSet.getClaim("id").toString());
+        int id = Integer.parseInt(claimsSet.getClaim("userId").toString());
         return new UserDTO(username, id);
     }
 }
