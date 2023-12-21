@@ -8,7 +8,7 @@ import facade from "../../../util/api.mjs";
 function General({ charInfo, setCharInfo }) {
 
 const [latestInfo, setLatestInfo] = useState({
-  attribute: "Bard",
+  attribute: "",
   value: "Information regarding you latest choice will be shown here.",
 });
 
@@ -17,9 +17,13 @@ const [latestInfo, setLatestInfo] = useState({
 const [raceNames, setRaceNames] = useState([]);
 
   const changeRace = (event) => {
+    
     setCharInfo({
       ...charInfo,
-      race: event.target.value,
+      data: {
+        ...charInfo.data,
+        race: event.target.value,
+      }
     });
 
     setLatestInfo({
@@ -31,7 +35,10 @@ const [raceNames, setRaceNames] = useState([]);
   const addClass = () => {
     setCharInfo({
       ...charInfo,
-      classes: [...charInfo.classes, { name: "", level: "" }],
+      data: {
+        ...charInfo.data,
+      classes: [...charInfo.data.classes, { name: "", level: "" }],
+      }
     });
     
   };
@@ -39,7 +46,10 @@ const [raceNames, setRaceNames] = useState([]);
   const changeBackground = (event) => {
     setCharInfo({
       ...charInfo,
+      data: {
+        ...charInfo.data,
       background: event.target.value,
+      }
     });
 
     setLatestInfo({
@@ -51,9 +61,6 @@ const [raceNames, setRaceNames] = useState([]);
 
 
   useEffect(() => {
-
-    // if Bard was chosen as race, then attribute would be bard
-    //api.call("Bard") would return information about bard
 
 
     // let description = facade.fetchData("race/" + latestInfo.attribute, false);
@@ -102,7 +109,7 @@ useEffect (() => {
                 type="text"
                 className="form-control"
                 list="races"
-                value={charInfo.race}
+                value={charInfo.data.race}
                 aria-describedby="basic-addon1"
                 onChange={changeRace}
               />
@@ -114,10 +121,6 @@ useEffect (() => {
             {name}
           </option>
         ))}
-              <option value="Bard" />
-              <option value="Joe" />
-              <option value="Cleric" />
-              <option value="Barbarian" />
             </datalist>
           </label>
           <div style={{ margin: "5%" }}></div>
@@ -150,7 +153,7 @@ useEffect (() => {
         <div className="col-md-4">
           <h1 style={{ textDecoration: "underline" }}>Classes</h1>
 
-          {charInfo.classes.map((item, index) => (
+          {charInfo.data.classes.map((item, index) => (
             <AddClass
               key={index}
               charInfo={charInfo}
