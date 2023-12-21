@@ -31,12 +31,12 @@ public class BackgroundRoutes implements Route {
         return () -> {
           path("/backgrounds", () -> {
               get(backgroundController::getBackgrounds);
-              path("/{name}", () -> {
+              path("/names", () -> {
+                  get(backgroundController::getBackgroundNames);
+              });
+              path("name/{name}", () -> {
                   get(backgroundController::getByName);
               });
-          });
-          path("/backgroundNames", () -> {
-              get(backgroundController::getBackgroundNames);
           });
         };
     }
