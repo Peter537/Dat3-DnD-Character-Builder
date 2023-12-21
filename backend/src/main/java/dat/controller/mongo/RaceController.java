@@ -1,7 +1,9 @@
 package dat.controller.mongo;
 
+import java.util.Arrays;
 import java.util.Objects;
 
+import com.mongodb.client.AggregateIterable;
 import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
@@ -22,13 +24,14 @@ public class RaceController {
         ctx.json(Objects.requireNonNull(race.find().first()).toJson());
     }
 
-    public void getRaceByName(Context ctx) { // TODO: Finish this. Gives the wrong result.
-        final String raceName = ctx.pathParam("raceName");
+    public void getByName(Context ctx) { // TODO: Finish this. Gives the wrong result.
+        String name = ctx.pathParam("name");
+
         MongoCollection<Document> races = db.getCollection("Race");
-        Document result = races.find(new Document("race.name", raceName)).first();
-        if (result != null)
-            ctx.json(result.toJson());
-        else
-            ctx.status(500);
+        AggregateIterable<Document> result = races.aggregate(Arrays.asList(new Document("$unwind", "$race"),
+                new Document("$match",
+                        new Document("race.name", name)))
+        );
+        ctx.json(Objects.requireNonNull(result.first()).toJson());
     }
 }
