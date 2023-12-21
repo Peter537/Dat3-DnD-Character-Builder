@@ -8,8 +8,7 @@ import io.javalin.apibuilder.EndpointGroup;
 
 import java.io.IOException;
 
-import static io.javalin.apibuilder.ApiBuilder.path;
-import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class CharacterRoutes implements Route {
 
@@ -28,11 +27,14 @@ public class CharacterRoutes implements Route {
         return () -> {
             path("/character", () -> {
                  post(characterController::createCharacter);
-                // path("/{id}", () -> {
-                //     get(characterController::getById);
-                //     put(characterController::updateCharacter);
-                //     delete(characterController::deleteCharacter);
-                // });
+                 path("/{id}", () -> {
+                     get(characterController::getById);
+//                     put(characterController::updateCharacter);
+//                     delete(characterController::deleteCharacter);
+                 });
+                 path("/user/{userId}", () -> {
+                     get(characterController::getByUser);
+                 });
             });
         };
     }
