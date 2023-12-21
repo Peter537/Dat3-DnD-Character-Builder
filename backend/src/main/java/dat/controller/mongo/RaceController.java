@@ -24,7 +24,7 @@ public class RaceController {
         ctx.json(Objects.requireNonNull(race.find().first()).toJson());
     }
 
-    public void getByName(Context ctx) { // TODO: Finish this. Gives the wrong result.
+    public void getByName(Context ctx) {
         String name = ctx.pathParam("name");
 
         MongoCollection<Document> races = db.getCollection("Race");
