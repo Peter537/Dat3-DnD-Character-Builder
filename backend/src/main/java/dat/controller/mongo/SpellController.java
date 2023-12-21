@@ -80,4 +80,20 @@ public class SpellController {
 
         ctx.json(jsonArray);
     }
+
+    public void getByName(Context ctx) {
+        // Get the desired level from the request
+        final String name = ctx.pathParam("name");
+
+        // Get the collection
+        MongoCollection<Document> collection = db.getCollection("Spell");
+
+        AggregateIterable<Document> result = collection.aggregate(Arrays.asList(new Document("$unwind", "$spell"),
+                new Document("$match",
+                        new Document("spell.name", name))));
+        JSONArray jsonArray = new JSONArray();
+        result.forEach(jsonArray::add);
+
+        ctx.json(jsonArray);
+    }
 }
