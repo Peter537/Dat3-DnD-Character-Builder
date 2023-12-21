@@ -48,7 +48,8 @@ function App() {
     );
 
   const [charInfo, setCharInfo] = useState({
-    name: "",
+    data : {
+      name: "",
     level: 0,
     stats: {
       str: 0,
@@ -67,6 +68,7 @@ function App() {
       langprof: [],
     },
     classes: [],
+    }
   });
 
   return (
