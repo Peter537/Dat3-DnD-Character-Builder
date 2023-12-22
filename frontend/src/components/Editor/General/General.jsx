@@ -27,8 +27,8 @@ const [raceNames, setRaceNames] = useState([]);
     });
 
     setLatestInfo({
-      attribute: "race",
       value: event.target.value,
+      attribute: event.target.value,
     });
   };
 
@@ -53,8 +53,8 @@ const [raceNames, setRaceNames] = useState([]);
     });
 
     setLatestInfo({
-      attribute: "Background",
-      value: event.target.value,
+      attribute: event.target.value,
+      value: "",
     });
 
   };
@@ -62,14 +62,13 @@ const [raceNames, setRaceNames] = useState([]);
 
   useEffect(() => {
 
+    //This useeffect is used to update the latestInfo state with the latest choice
+    // and it should somehow update latestinfo with the data we want and then show that in the informationbox.
+    
+    
 
-    // let description = facade.fetchData("race/" + latestInfo.attribute, false);
-    // setLatestInfo({
-    //   ...latestInfo,
-    // });
 
-
-  }, [latestInfo]);
+  }, []);
 
 async function getRaceNames() {
 
