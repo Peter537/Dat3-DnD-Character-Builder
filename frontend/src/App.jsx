@@ -14,6 +14,7 @@ import EditorPage from "./components/Editor/EditorPage/EditorPage";
 import General from "./components/Editor/General/General";
 import Features from "./components/Editor/Features/Features";
 import CharactersPage from "./pages/CharactersPage/CharactersPage";
+import Spells from "./components/Editor/Spells/Spells";
 
 function App() {
   //#region Login methods
@@ -105,7 +106,7 @@ function App() {
                   <Features charInfo={charInfo} setCharInfo={setCharInfo} />
                 }
               />
-              <Route path="spells" element={<h1>spellspage</h1>} />
+              <Route path="spells" element={<Spells/>} />
             </Route>
             <Route path="/characters" element={<CharactersPage />} />
             <Route path="*" element={<h1>404: Page not found</h1>} />
