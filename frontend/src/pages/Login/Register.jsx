@@ -8,7 +8,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  function handleRegister(e) {
+  async function handleRegister(e) {
     e.preventDefault();
 
     // Check if email, username, password, and confirmPassword are not empty
@@ -30,7 +30,7 @@ function Register() {
       return;
     }
 
-    facade.register(email, username, password);
+    await facade.register(email, username, password);
     window.location.replace("/l/login");
   }
 
