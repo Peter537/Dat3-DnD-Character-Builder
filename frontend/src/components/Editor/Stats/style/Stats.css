@@ -10,5 +10,22 @@
     width: 60%;
   }
 
+  #image-preview {
+    max-width: 450px; /* Set your desired maximum width */
+    max-height: 450px; /* Set your desired maximum height */
+    margin-top: 20px;
+    border: 1px solid #ccc; /* Add a border for better visibility */
+    float: right; /* Align the image preview to the right */
+    margin-right: 20px; /* Adjust the right margin as needed */
+    overflow: hidden; /* Hide any part of the image that exceeds the container */
+}
+
+#image-preview img {
+    width: 100%; /* Make the image fill the container width */
+    height: 100%; /* Make the image fill the container height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+
 
 /* //flex-direction: column; */

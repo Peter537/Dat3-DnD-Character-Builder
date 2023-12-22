@@ -41,6 +41,31 @@ function Stats({ charInfo, setCharInfo }) {
     console.log(charInfo.data);
   }, [charInfo]);
 
+
+
+  function previewImage() {
+    var fileInput = document.getElementById('file-input');
+    var imagePreview = document.getElementById('image-preview');
+
+    // Check if a file is selected
+    if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            // Set the source of the image to the selected file
+            imagePreview.innerHTML = '<img src="' + e.target.result + '" alt="Image Preview" />';
+        };
+
+        // Read the selected file as a Data URL
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        // Display a placeholder image if no file is selected
+        imagePreview.innerHTML = '<img src="placeholder.jpg" alt="Placeholder Image" />';
+    }
+}
+
+
+
   return (
     <div className="stats-container">
       <div className="row">
@@ -106,16 +131,16 @@ function Stats({ charInfo, setCharInfo }) {
         </div>
       </div>
 
+<div style={{margin: "1%"}}></div>
       <div>
-        <label htmlFor="img">
-          <img
-            style={{ width: "40%", height: "40%" }}
-            src="https://cdn.discordapp.com/attachments/259737881071976449/1185615190650261594/submit-new2-1439041881__1_.gif?ex=65904131&is=657dcc31&hm=408c6ca3b54375074ca070e6af4ef961e806a1d6f96da6d10a306212629ac975&"
-            alt="placeholder"
-          />
-          <input id="img" type="file" hidden />
-        </label>
-      </div>
+    <label htmlFor="file-input">
+        <input type="file" id="file-input" accept="image/*" onChange={previewImage} hidden/>
+        <div id="image-preview">
+            <img src="https://t3.ftcdn.net/jpg/03/45/05/92/360_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg" alt="Placeholder Image" />
+        </div>
+    </label>
+</div>
+
     </div>
   );
 }

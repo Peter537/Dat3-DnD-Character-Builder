@@ -17,9 +17,9 @@ function EditorPage({charInfo, setCharInfo}) {
       <div className="row" style={{ margin: "3%" }}></div>
       <Stats charInfo={charInfo} setCharInfo={setCharInfo} />
 
-      <div className="row" style={{ margin: "5%" }}></div>
+      <div className="row" style={{ margin: "3%" }}></div>
       <ENav />
-      <div>
+      <div style={{marginTop: "2%"}}>
       <Outlet/>
       </div>
     </div>
