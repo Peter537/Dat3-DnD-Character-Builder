@@ -46,7 +46,10 @@ function EditProfile({ user, updateUser }) {
       </select>
       <div>Description</div>
       <textarea id="edit-description" />
-      <button className="col-1 btn btn-primary" onClick={() => save()}>
+      <button
+        className="col-1 btn btn-primary edit-profile-button"
+        onClick={() => save()}
+      >
         Save
       </button>
     </div>
