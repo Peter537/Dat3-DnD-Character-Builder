@@ -173,7 +173,7 @@ public class ApplicationConfig {
                     || permittedRoles.contains(Role.of("ANYONE"))) {
                 if (ctx.method().toString().equals("PUT") && path.startsWith(CONTEXT_PATH + "/users/")) {
                     try {
-                        String token = ctx.header("Authorization").split(" ")[1];
+                        String token = ctx.header("Authentication").split(" ")[1];
                         UserDTO userDTO = TokenFactory.getInstance().verifyToken(token);
                         User user = UserDAO.getInstance().readById(userDTO.getId())
                                 .orElseThrow(() -> new AuthorizationException(401, "Invalid token"));
