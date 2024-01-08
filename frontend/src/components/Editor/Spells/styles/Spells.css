@@ -1,0 +1,38 @@
+/* Spells.css */
+
+.spell-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .spell-table,
+  .spell-level-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .spell-table td,
+  .spell-table th,
+  .spell-level-table td,
+  .spell-level-table th {
+    border: 1px solid #ddd; /* Border color */
+    padding: 8px; /* Padding for cells */
+    text-align: left;
+  }
+  
+  .spell-level-table th,
+  .spell-level-table td {
+    text-align: center; /* Center-align header and input cells in the spells grid */
+  }
+  
+  .spell-level-header {
+    font-weight: bold;
+  }
+  
+  .input-container {
+    margin-bottom: 2%; /* Add a 1px margin between input fields */
+  }
+  
+  
+  

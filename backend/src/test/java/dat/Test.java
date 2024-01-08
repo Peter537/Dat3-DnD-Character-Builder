@@ -22,8 +22,8 @@ public abstract class Test {
         ApplicationConfig.startServer(7777);
 
         // Create users and roles
-        User user = new User("user", "user123");
-        User admin = new User("admin", "admin123");
+        User user = new User("user@mail.dk", "user", "user123");
+        User admin = new User("admin@mail.dk", "admin", "admin123");
         Role userRole = new Role("user");
         Role adminRole = new Role("admin");
         user.addRole(userRole);
@@ -38,8 +38,8 @@ public abstract class Test {
         }
 
         // Get tokens
-        this.USER_TOKEN = getToken(user.getUsername(), "user123");
-        this.ADMIN_TOKEN = getToken(admin.getUsername(), "admin123");
+        this.USER_TOKEN = getToken(user.getEmail(), "user123");
+        this.ADMIN_TOKEN = getToken(admin.getEmail(), "admin123");
     }
 
     @AfterAll
@@ -47,8 +47,8 @@ public abstract class Test {
         ApplicationConfig.stopServer();
     }
 
-    private String getToken(String username, String password) {
-        String json = String.format("{\"username\": \"%s\", \"password\": \"%s\"}", username, password);
+    private String getToken(String email, String password) {
+        String json = String.format("{\"email\": \"%s\", \"password\": \"%s\"}", email, password);
         String token = given()
                 .contentType("application/json")
                 .body(json)

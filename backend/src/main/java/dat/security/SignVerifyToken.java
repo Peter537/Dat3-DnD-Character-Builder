@@ -30,18 +30,18 @@ public class SignVerifyToken {
         }
     }
 
-    public String signToken(String username, String roles, Date date) throws JOSEException {
-        JWTClaimsSet claims = this.createClaims(username, roles, date);
+    public String signToken(String username, Integer id, Date date) throws JOSEException {
+        JWTClaimsSet claims = this.createClaims(username, id, date);
         JWSObject jwsObject = this.createHeaderAndPayload(claims);
         return this.signTokenWithSecretKey(jwsObject);
     }
 
-    private JWTClaimsSet createClaims(String username, String roles, Date date) {
+    private JWTClaimsSet createClaims(String username, Integer id, Date date) {
         return new JWTClaimsSet.Builder()
                 .subject(username)
                 .issuer(ISSUER)
                 .claim("username", username)
-                .claim("roles", roles)
+                .claim("userId", id)
                 .expirationTime(new Date(date.getTime() + Integer.parseInt(TOKEN_EXPIRE_TIME)))
                 .build();
     }
@@ -77,7 +77,7 @@ public class SignVerifyToken {
         }
 
         String username = claimsSet.getClaim("username").toString();
-        String[] roles = claimsSet.getClaim("roles").toString().split(",");
-        return new UserDTO(username, roles);
+        int id = Integer.parseInt(claimsSet.getClaim("userId").toString());
+        return new UserDTO(username, id);
     }
 }

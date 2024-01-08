@@ -1,0 +1,7 @@
+.cstm-navbar {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  --bs-tertiary-bg-rgb: 9, 8, 9;
+}
