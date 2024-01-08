@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Spells/styles/Spells.css"; // You can create a separate CSS file for styling
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-const Spells = () => {
-  // State for spell information
+function Spells({ charInfo, setCharInfo }) {
+
   const [spellInfo, setSpellInfo] = useState({
     spellcastingClass: "",
     spellcastingAbility: "",
@@ -11,18 +11,27 @@ const Spells = () => {
     spellAttackBonus: "",
     cantrips: "",
     spellLevels: {
-      spellLevel1: { slots: 0, spells: [] },
-      spellLevel2: { slots: 0, spells: [] },
-      spellLevel3: { slots: 0, spells: [] },
-      spellLevel4: { slots: 0, spells: [] },
-      spellLevel5: { slots: 0, spells: [] },
-      spellLevel6: { slots: 0, spells: [] },
-      spellLevel7: { slots: 0, spells: [] },
-      spellLevel8: { slots: 0, spells: [] },
+      spellLevel1: { spells: [] },
+      spellLevel2: { spells: [] },
+      spellLevel3: { spells: [] },
+      spellLevel4: { spells: [] },
+      spellLevel5: { spells: [] },
+      spellLevel6: { spells: [] },
+      spellLevel7: { spells: [] },
+      spellLevel8: { spells: [] },
     },
   });
 
-  // Function to handle changes in spell information
+  useEffect(() => {
+    setCharInfo({
+      ...charInfo,
+      data: {
+        ...charInfo.data,
+        spells: spellInfo,
+      },
+    });
+  }, [spellInfo]);
+
   const handleChange = (field, value) => {
     setSpellInfo({
       ...spellInfo,
@@ -30,25 +39,6 @@ const Spells = () => {
     });
   };
 
-  const updateSlots = (spellLevel, e) => {
-    const value = e.target.value;
-    setSpellInfo((prevSpellInfo) => {
-      const updatedSpellLevels = {
-        ...prevSpellInfo.spellLevels,
-        [spellLevel]: {
-          ...prevSpellInfo.spellLevels[spellLevel],
-          slots: value,
-        },
-      };
-      return {
-        ...prevSpellInfo,
-        spellLevels: updatedSpellLevels,
-      };
-    });
-  };
-
-
-  // Function to add a new empty field for a specific spell level
   const addSpellField = (spellLevel) => {
     setSpellInfo((prevSpellInfo) => ({
       ...prevSpellInfo,
@@ -62,10 +52,10 @@ const Spells = () => {
     }));
   };
 
-  // Function to handle changes in spell level input fields
   const handleSpellLevelChange = (spellLevel, index, value) => {
-    setSpellInfo((prevSpellInfo) => {
-      const updatedSpellLevels = {
+    setSpellInfo((prevSpellInfo) => ({
+      ...prevSpellInfo,
+      spellLevels: {
         ...prevSpellInfo.spellLevels,
         [spellLevel]: {
           ...prevSpellInfo.spellLevels[spellLevel],
@@ -73,40 +63,16 @@ const Spells = () => {
             (item, i) => (i === index ? value : item)
           ),
         },
-      };
-      return {
-        ...prevSpellInfo,
-        spellLevels: updatedSpellLevels,
-      };
-    });
-  };
-
-  // Function to handle using a spell slot
-  const useSpellSlot = (spellLevel) => {
-    setSpellInfo((prevSpellInfo) => {
-      const currentSlots = prevSpellInfo.spellLevels[spellLevel].slots;
-      if (currentSlots > 0) {
-        const updatedSpellLevels = {
-          ...prevSpellInfo.spellLevels,
-          [spellLevel]: {
-            ...prevSpellInfo.spellLevels[spellLevel],
-            slots: currentSlots - 1,
-          },
-        };
-        return {
-          ...prevSpellInfo,
-          spellLevels: updatedSpellLevels,
-        };
-      }
-      return prevSpellInfo;
-    });
+      },
+    }));
   };
 
   return (
     <div className="spell-container" style={{ marginBottom: "10%" }}>
       <table className="spell-table">
         <tbody>
-          {/* Spellcasting Information Grid */}
+
+          {/* Basic spell info DC saving, ATK bonus etc. */}
           <tr>
             <td>
               <label>Spellcasting Class:</label>
@@ -160,7 +126,7 @@ const Spells = () => {
         </tbody>
       </table>
 
-      {/* Spells Grid */}
+      {/* Actual spell grid showing the selfwritten abilities */}
       <table className="spell-level-table">
         <tbody>
           <tr>
@@ -168,23 +134,14 @@ const Spells = () => {
             {Array.from({ length: 9 }, (_, index) => (
               <th key={index}>
                 <div>
-  {index === 0 ? "Cantrips" : `SPELL LEVEL ${index}`}
-  <button
-    type="button"
-    onClick={() => addSpellField(`spellLevel${index + 1}`)}
-  >
-    +
-  </button>
-  <div>
-    Slots:{" "}
-    <input
-      type="number"
-      value={spellInfo.spellLevels[`spellLevel${index + 1}`]?.slots}
-      onChange={(e) => updateSlots(`spellLevel${index + 1}`, e)}
-    />
-  </div>
-</div>
-
+                  {index === 0 ? "Cantrips" : `SPELL LEVEL ${index}`}
+                  <button
+                    type="button"
+                    onClick={() => addSpellField(`spellLevel${index + 1}`)}
+                  >
+                    +
+                  </button>
+                </div>
               </th>
             ))}
           </tr>
@@ -207,12 +164,6 @@ const Spells = () => {
                             )
                           }
                         />
-                        <button
-                          type="button"
-                          onClick={() => useSpellSlot(`spellLevel${index + 1}`)}
-                        >
-                          Use
-                        </button>
                       </div>
                     )
                   )}
@@ -224,6 +175,6 @@ const Spells = () => {
       </table>
     </div>
   );
-};
+}
 
 export default Spells;

@@ -106,7 +106,7 @@ function App() {
                   <Features charInfo={charInfo} setCharInfo={setCharInfo} />
                 }
               />
-              <Route path="spells" element={<Spells/>} />
+              <Route path="spells" element={<Spells charInfo={charInfo} setCharInfo={setCharInfo}/>} />
             </Route>
             <Route path="/characters" element={<CharactersPage />} />
             <Route path="*" element={<h1>404: Page not found</h1>} />

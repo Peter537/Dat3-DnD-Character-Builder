@@ -73,7 +73,7 @@ const [raceNames, setRaceNames] = useState([]);
     // and it should somehow update latestinfo with the data we want and then show that in the informationbox.
     console.log(latestInfo.attribute)
 
-    if (latestInfo.attribute.length < 50) {
+    if (latestInfo.attribute.length > 50) {
       return;
     }
 
@@ -83,7 +83,7 @@ const [raceNames, setRaceNames] = useState([]);
 
       setLatestInfo({
         ...latestInfo,
-        value: JSON.stringify(data.race),
+        value: JSON.stringify(data.race.speed),
       })
     })
 
