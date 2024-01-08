@@ -29,6 +29,7 @@ public class FeatRoutes implements Route {
         return () -> {
             path("/feats", () -> {
                 get(featController::getFeats);
+                get("/names", featController::getFeatNames);
             });
         };
     }

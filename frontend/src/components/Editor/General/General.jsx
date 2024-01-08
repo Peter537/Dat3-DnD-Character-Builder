@@ -27,7 +27,7 @@ const [raceNames, setRaceNames] = useState([]);
     });
 
     setLatestInfo({
-      value: event.target.value,
+      value: "loading...",
       attribute: event.target.value,
     });
   };
@@ -60,15 +60,36 @@ const [raceNames, setRaceNames] = useState([]);
   };
 
 
+  async function getRaceinfo() {
+    return await facade.fetchData("race/"+latestInfo.attribute, false)
+
+  }
+
+
+
   useEffect(() => {
 
     //This useeffect is used to update the latestInfo state with the latest choice
     // and it should somehow update latestinfo with the data we want and then show that in the informationbox.
-    
-    
+    console.log(latestInfo.attribute)
+
+    if (latestInfo.attribute.length > 50) {
+      return;
+    }
+
+    getRaceinfo().then(data => {
+      console.log("this is the data",data)
 
 
-  }, []);
+      setLatestInfo({
+        ...latestInfo,
+        value: JSON.stringify(data.race.speed),
+      })
+    })
+
+  }, [charInfo]);
+  
+  //[charInfo.race, charInfo.background, charInfo.classes])
 
 async function getRaceNames() {
 
@@ -79,9 +100,11 @@ async function getRaceNames() {
 // and then sets the state of raceNames to the data retrieved
 useEffect (() => {
 
+  if (raceNames.length === 0) {
   getRaceNames().then(data => {
     setRaceNames(data)
   })
+}
 
   
 
@@ -95,7 +118,7 @@ useEffect (() => {
 
   return (
     <>
-      <div className="dropdown-area row">
+      <div className="dropdown-area row" style={{marginBottom: "10%"}}>
         <div className="col-md-4">
           <label>
             <div className="input-group mb-3">
@@ -168,11 +191,10 @@ useEffect (() => {
 
         <div className="col-md-4">
           <h2>Information</h2>
-          <textarea
+          <textarea className="form-control"
             style={{
               borderRadius: "5%",
-              width: "60%",
-              height: "100%",
+              height: "200%",
         
             }} disabled
             value={latestInfo.value}>

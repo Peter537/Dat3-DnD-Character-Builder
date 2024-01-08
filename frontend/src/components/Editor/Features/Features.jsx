@@ -1,8 +1,29 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import './Features.css'; // Import the CSS file
+import facade from '../../../util/api.mjs';
 
-const Features = ({ feats = ["Feat1", "Feat2", "Feat3"]}) => {
+const Features = ({ charInfo, setCharInfo}) => {
   const [selectedFeats, setSelectedFeats] = useState([]);
+
+  const [feats, setFeats] = useState([]);
+
+
+
+
+  function getFeats() {
+    facade.fetchData("feats/names", false).then((data) => {
+      setFeats(data);
+    });
+  }
+
+  useEffect(() => {
+    if (feats.length === 0) {
+    getFeats();
+    }
+  }, []);
+
+
 
   const selectFeat = (feat) => {
     if (selectedFeats.includes(feat)) {
@@ -11,6 +32,19 @@ const Features = ({ feats = ["Feat1", "Feat2", "Feat3"]}) => {
       setSelectedFeats([...selectedFeats, feat]);
     }
   };
+
+
+
+  useEffect(() => {
+    setCharInfo({
+      ...charInfo,
+      data: {
+        ...charInfo.data,
+        feats: selectedFeats,
+      }
+    });
+  }, [selectedFeats]);
+
 
   return (
 <>
